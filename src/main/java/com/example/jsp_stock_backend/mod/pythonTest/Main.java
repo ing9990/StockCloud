@@ -2,12 +2,7 @@ package com.example.jsp_stock_backend.mod.pythonTest;
 
 import lombok.*;
 
-/**
- * @author TaeWK
- */
 
-@Builder
-@Data
 public class Main {
 
     public Main(){

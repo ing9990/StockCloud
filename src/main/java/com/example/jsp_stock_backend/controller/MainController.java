@@ -1,13 +1,14 @@
 package com.example.jsp_stock_backend.controller;
 
-import com.example.jsp_stock_backend.domain.Role;
 import com.example.jsp_stock_backend.domain.User;
+import com.example.jsp_stock_backend.dto.AddStockDto;
 import com.example.jsp_stock_backend.dto.AddUserDto;
 import com.example.jsp_stock_backend.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -54,6 +55,11 @@ public class MainController {
     @PostMapping("") // 유저 회원가입.
     public void addUser(@RequestBody AddUserDto addUserDto){
         userService.addUser(addUserDto);
+    }
+
+    @PostMapping("/stock")
+    public List<AddStockDto> addStock(@RequestBody ArrayList<AddStockDto> addStockDto){
+        return addStockDto;
     }
 
 

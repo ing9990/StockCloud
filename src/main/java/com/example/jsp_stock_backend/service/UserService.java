@@ -24,7 +24,7 @@ import java.util.Map;
 @Slf4j
 public class UserService {
 
-    public final UserRepository userRepository; // Benas 의존성 주입.
+    public final UserRepository userRepository;
     public final GivenUsername givenUsername;
 
     static boolean is_updated = false;
@@ -43,7 +43,6 @@ public class UserService {
     }
 
     public void makeWordCloud() {
-        log.info("워드 클라우드를 생성했습니다.");
         new Main();
     }
 

@@ -6,6 +6,8 @@ import org.apache.tomcat.jni.Local;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author TaeWK
@@ -32,7 +34,7 @@ public class User {
     @Column(name = "LOGIN_PASSWORD", nullable = false)
     private String login_password; //LOGIN PASSWORD
 
-    @Column(name = "USER_NAME", nullable = false)
+    @Column(name = "USER_NAME", nullable = false, unique = true)
     private String username; // USERNAME
 
     @Enumerated(EnumType.STRING) @Column(name = "ROLE")
@@ -43,6 +45,7 @@ public class User {
 
     @Column(name = "USER_UPDATED_AT")
     private LocalDateTime updated_at; // LAST SELECTED DATE
+
 }
 
 

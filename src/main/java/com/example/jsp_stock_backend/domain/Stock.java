@@ -2,9 +2,7 @@ package com.example.jsp_stock_backend.domain;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * @author TaeWK
@@ -27,6 +25,8 @@ public class Stock {
     private int stock_price;      //가격
 
     private int change_price_day; //전일비
+
+    private int total_price;      // 시가총액
 
     private double chage_per_day; //등락률
 

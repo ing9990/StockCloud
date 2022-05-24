@@ -1,9 +1,12 @@
 package com.example.jsp_stock_backend.service;
 
 import com.example.jsp_stock_backend.domain.Role;
+import com.example.jsp_stock_backend.domain.Stock;
 import com.example.jsp_stock_backend.domain.User;
+import com.example.jsp_stock_backend.dto.AddStockDto;
 import com.example.jsp_stock_backend.dto.AddUserDto;
 import com.example.jsp_stock_backend.mod.pythonTest.Main;
+import com.example.jsp_stock_backend.repository.StockRepository;
 import com.example.jsp_stock_backend.repository.UserRepository;
 import com.example.jsp_stock_backend.utils.GivenUsername;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +28,7 @@ import java.util.Map;
 public class UserService {
 
     public final UserRepository userRepository;
+    public final StockRepository stockRepository;
     public final GivenUsername givenUsername;
 
     static boolean is_updated = false;
@@ -49,7 +53,7 @@ public class UserService {
     public List<User> findAllUsers() {
         List<User> list = new ArrayList<>();
         list = userRepository.findAll();
-        log.info(list.size()+"명이 조회되었습니다.");
+        log.info(list.size() + "명이 조회되었습니다.");
         return userRepository.findAll();
     }
 
@@ -63,12 +67,12 @@ public class UserService {
             user.setLogin_password(addUserDto.getLogin_password());
             user.setUsername(addUserDto.getUsername());
             userRepository.save(user);
-            log.info(user+"님이 회원가입을 했습니다.");
+            log.info(user + "님이 회원가입을 했습니다.");
         } else return;
     }
 
     public void deleteUserById(Long id) {
-        log.info(userRepository.getById(id).getUsername()+"님이 퇴출당했습니다.");
+        log.info(userRepository.getById(id).getUsername() + "님이 퇴출당했습니다.");
         userRepository.deleteById(id);
     }
 
@@ -79,7 +83,7 @@ public class UserService {
 
     public List<User> findUsersByUsername(String username) {
         List<User> list = userRepository.findUsersByUsername(username);
-        log.info("이름이 "+username+"인 회원 " + list.size()+"명을 찾았습니다.");
+        log.info("이름이 " + username + "인 회원 " + list.size() + "명을 찾았습니다.");
         return list;
     }
 
@@ -109,4 +113,22 @@ public class UserService {
     }
 
 
+    public void stockParse(AddStockDto addStockDto) {
+
+        stockRepository.deleteAll();
+
+        for (int i = 0; i < addStockDto.getStock_name().size(); i++) {
+
+            int rank = addStockDto.getStock_rank().get(i);
+            String name = addStockDto.getStock_name().get(i);
+            int price = addStockDto.getStock_price().get(i);
+            int change_price = addStockDto.getChange_price_day().get(i);
+            double change_per_day = addStockDto.getChage_per_day().get(i);
+            int totalprice = addStockDto.getTotal_price().get(i);
+            int tradingVol = addStockDto.getTrading_volume().get(i);
+
+            stockRepository.save(new Stock(name, rank, price, change_price, totalprice, change_per_day, tradingVol));
+        }
+
+    }
 }

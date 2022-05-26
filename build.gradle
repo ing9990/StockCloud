@@ -24,6 +24,7 @@ dependencies {
     implementation 'mysql:mysql-connector-java'
     implementation 'javax.servlet:jstl'
     implementation "org.apache.tomcat.embed:tomcat-embed-jasper"
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'

@@ -3,11 +3,15 @@ package com.example.jsp_stock_backend.controller;
 import com.example.jsp_stock_backend.domain.User;
 import com.example.jsp_stock_backend.dto.AddStockDto;
 import com.example.jsp_stock_backend.dto.AddUserDto;
+import com.example.jsp_stock_backend.dto.Code;
 import com.example.jsp_stock_backend.service.UserService;
+import com.example.jsp_stock_backend.serviceMail.MailService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +28,13 @@ public class MainController {
     @GetMapping("/test")
     public String test() {
         return "test";
+    }
+
+    @GetMapping("/mail/{username}/{email}")
+    public String mail(@PathVariable String username, @PathVariable String email, HttpSession session) {
+        userService.sendMail(username, email);
+        log.info(MailService.token);
+        return MailService.token;
     }
 
 

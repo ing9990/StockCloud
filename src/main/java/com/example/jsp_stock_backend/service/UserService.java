@@ -8,6 +8,7 @@ import com.example.jsp_stock_backend.dto.AddUserDto;
 import com.example.jsp_stock_backend.mod.pythonTest.Main;
 import com.example.jsp_stock_backend.repository.StockRepository;
 import com.example.jsp_stock_backend.repository.UserRepository;
+import com.example.jsp_stock_backend.serviceMail.MailService;
 import com.example.jsp_stock_backend.utils.GivenUsername;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +31,7 @@ public class UserService {
     public final UserRepository userRepository;
     public final StockRepository stockRepository;
     public final GivenUsername givenUsername;
+    private final MailService mailService;
 
     static boolean is_updated = false;
     static Map<String, Integer> usernameHash = new HashMap<>();
@@ -51,7 +53,7 @@ public class UserService {
     }
 
     public List<User> findAllUsers() {
-        List<User> list = new ArrayList<>();
+        List<User> list;
         list = userRepository.findAll();
         log.info(list.size() + "명이 조회되었습니다.");
         return userRepository.findAll();
@@ -130,5 +132,9 @@ public class UserService {
             stockRepository.save(new Stock(name, rank, price, change_price, totalprice, change_per_day, tradingVol));
         }
 
+    }
+
+    public void sendMail(String username,String email) {
+        mailService.sendMail(username,email);
     }
 }

@@ -14,7 +14,8 @@
     <input type="password" name="pw" required placeholder="Password">
     <input type="submit" value="로그인">
 </form>
-<p><%=(String) session.getAttribute("is_login")%></p>
+
+<p style="color: red"><%=(String) session.getAttribute("is_login") == null ? "" : (String) session.getAttribute("is_login")%></p>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 </body>

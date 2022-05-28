@@ -56,6 +56,8 @@ public class MainController {
     }
 
 
+    // http://localhost:8090/api/v1  GET METHOD
+
     // -----------USERS GET METHOD-----------------//
     @GetMapping("") // 워드 클라우드 생성.
     public void makeWordCloud() {
@@ -75,7 +77,7 @@ public class MainController {
     public String addStock(@RequestBody AddStockDto addStockDto) {
         log.info("주식 가격들이 데이터베이스에 저장되었습니다.");
         userService.stockParse(addStockDto);
-        return "200 OK";
+        return "";
     }
 
 

@@ -43,6 +43,6 @@ public class MailService {
 
         javaMailSender.send(simpleMailMessage);
     }
-
-
 }
+
+

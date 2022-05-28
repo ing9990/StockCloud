@@ -10,8 +10,8 @@
 </head>
 <body>
 
-<table class="table" id="user_table">
-    <thead>
+<table  id="user_table" class="table table-striped table-hover table-bordered" style = "width: 80%; margin: 0 auto;">
+    <thead class="table-dark">
     <tr>
         <th scope="col">UID</th>
         <th scope="col">ID</th>
@@ -19,6 +19,8 @@
         <th scope="col">Name</th>
         <th scope="col">Email</th>
         <th scope="col">Rank</th>
+        <th scope="col">Upgrade</th>
+        <th scope="col">Banish</th>
     </tr>
     </thead>
 
@@ -26,7 +28,6 @@
 
 
     <script>
-
         let arr = [
             {
                 user_id: 0,
@@ -37,42 +38,41 @@
                 role: "ADMIN",
             }
         ]
+        var btn1 = "<button type=button class=btn btn-success>UP</button>";
+        var btn2 = "<button type=button class=btn btn-danger>X</button>";
 
         const table = document.getElementById("user_table")
-
         fetch
         ("http://localhost:8090/api/v1/users")
             .then((res) => res.json())
             .then((data) => {
                 console.log(data)
                 data.forEach((item)=>{
-
                     const newRow = table.insertRow()
-
                     const user_id = newRow.insertCell(0)
                     const login_id = newRow.insertCell(1)
                     const login_password = newRow.insertCell(2)
                     const username = newRow.insertCell(3)
                     const email = newRow.insertCell(4)
                     const role = newRow.insertCell(5)
-
+                    const Upgrade = newRow.insertCell(6)
+      		  const Banish = newRow.insertCell(7)
+                    
                     user_id.innerText = item.user_id
                     login_id.innerText = item.login_id
                     login_password.innerText = item.login_password
                     username.innerText = item.username
                     email.innerText = item.email
                     role.innerText = item.role
-
+                    Upgrade.innerHTML = btn1
+                 	  Banish.innerHTML = btn2 
                 })
             })
-
     </script>
-
-
     </tbody>
 </table>
 
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>

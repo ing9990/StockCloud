@@ -38,8 +38,8 @@
                 role: "ADMIN",
             }
         ]
-        var btn1 = "<button type=button class=btn btn-success>UP</button>";
-        var btn2 = "<button type=button class=btn btn-danger>X</button>";
+        var btn1 = "<button type=button class=btn-success>UP</button>";
+        var btn2 = "<button type=button class=btn-danger>X</button>";
 
         const table = document.getElementById("user_table")
         fetch

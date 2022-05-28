@@ -5,7 +5,7 @@
 <head>
     <link rel="stylesheet" href="https://getbootstrap.com/docs/5.0/dist/css/bootstrap.min.css">
     <meta charset="UTF-8">
-    <title>Insert title here</title>
+    <title>Join</title>
 
     <style>
         body {

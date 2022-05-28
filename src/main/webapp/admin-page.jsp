@@ -5,20 +5,26 @@
 <head>
     <meta charset="UTF-8">
     <title>Insert title here</title>
-    <link rel="stylesheet" href="https://getbootstrap.com/docs/5.0/dist/css/bootstrap.min.css">
+    <%--<link rel="stylesheet" href="https://getbootstrap.com/docs/5.0/dist/css/bootstrap.min.css">--%>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <title>ADMIN PAGE</title>
 </head>
 <body>
 
-<table class="table" id="user_table">
+<table id="user_table" class="table table-bordered"
+       style="width: 80%; table: white; margin: 0 auto;">
     <thead>
     <tr>
-        <th scope="col">UID</th>
+        <th scope="col">#</th>
         <th scope="col">ID</th>
         <th scope="col">PW</th>
         <th scope="col">Name</th>
         <th scope="col">Email</th>
         <th scope="col">Rank</th>
+        <th scope="col">Upgrade</th>
+        <th scope="col">Downgrade</th>
+        <th scope="col">Banish</th>
     </tr>
     </thead>
 
@@ -27,34 +33,62 @@
 
     <script>
 
-        let arr = [
-            {
-                user_id: 0,
-                login_id: "TEST",
-                login_password: "TEST",
-                username: "TEST",
-                email: "TEST@naver.com",
-                role: "ADMIN",
-            }
-        ]
+        function upbtnOnclick(e) {
+            let id = e.name.charAt(e.name.length - 1)
+            fetch("http://localhost:8090/api/v1/put/" + id)
+                .then((res) => console.log(res))
+
+            location.reload()
+        }
+
+        function dnbtnOnclick(e) {
+            let id = e.name.charAt(e.name.length - 1)
+            fetch("http://localhost:8090/api/v1/uput/" + id)
+                .then((res) => console.log(res))
+
+            location.reload()
+        }
+
+        function banbtnOnclick(e) {
+            let id = e.name.charAt(e.name.length - 1)
+
+            fetch("http://localhost:8090/api/v1/delete/" + id)
+                .then((res) => console.log(res))
+
+            location.reload()
+        }
+
+
 
         const table = document.getElementById("user_table")
+        let n = 0
 
         fetch
         ("http://localhost:8090/api/v1/users")
             .then((res) => res.json())
             .then((data) => {
-                console.log(data)
-                data.forEach((item)=>{
-
+                data.forEach((item) => {
                     const newRow = table.insertRow()
-
                     const user_id = newRow.insertCell(0)
                     const login_id = newRow.insertCell(1)
                     const login_password = newRow.insertCell(2)
                     const username = newRow.insertCell(3)
                     const email = newRow.insertCell(4)
                     const role = newRow.insertCell(5)
+                    const Upgrade = newRow.insertCell(6)
+                    const DownGrade = newRow.insertCell(7)
+                    const Banish = newRow.insertCell(8)
+
+                    const suname = "su" + item.user_id
+                    const doname = "do" + item.user_id
+                    const bnname = "bn" + item.user_id
+
+                    console.log(suname)
+
+                    let btn1 = "<button type=button name=" + suname + " onclick='upbtnOnclick(this)' class=btn btn-success>UP</button>";
+                    let btn1_2 = "<button type=button name=" + doname + " onclick='dnbtnOnclick(this)' class=btn btn-success>DOWN</button>";
+                    let btn2 = "<button type=button name=" + bnname + " onclick='banbtnOnclick(this)' class=btn btn-danger>X</button>";
+
 
                     user_id.innerText = item.user_id
                     login_id.innerText = item.login_id
@@ -62,16 +96,14 @@
                     username.innerText = item.username
                     email.innerText = item.email
                     role.innerText = item.role
-
+                    Upgrade.innerHTML = btn1
+                    DownGrade.innerHTML = btn1_2
+                    Banish.innerHTML = btn2
                 })
             })
-
     </script>
-
-
     </tbody>
 </table>
-
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 </body>

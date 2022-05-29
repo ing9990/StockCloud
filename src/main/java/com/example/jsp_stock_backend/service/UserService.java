@@ -137,4 +137,29 @@ public class UserService {
     public void sendMail(String username,String email) {
         mailService.sendMail(username,email);
     }
+
+    public User edit2Role(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(RuntimeException::new);
+
+        Role role = user.getRole();
+
+        if (role == Role.BRONZE) {
+            log.info("브론즈는 더 이상 강등될 수 없습니다.");
+        } else if (role == Role.SILVER) {
+            log.info(user.getUsername() + "님의 등급이 브론즈로 강등됐습니다.");
+            user.setRole(Role.BRONZE);
+
+        } else if (role == Role.GOLD) {
+            log.info(user.getUsername() + "님의 등급이 실버로 강등됐습니다.");
+            user.setRole(Role.SILVER);
+        } else if (role == Role.VIP) {
+            user.setRole(Role.GOLD);
+        } else if (role == Role.ADMIN) {
+            log.info("관리자는 등급을 상승시킬 수 없습니다.");
+        }
+        userRepository.save(user);
+
+        return user;
+    }
 }

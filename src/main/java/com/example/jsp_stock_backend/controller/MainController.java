@@ -82,14 +82,19 @@ public class MainController {
 
 
     // --------------PUT METHOD-------------- //
-    @PutMapping("/{id}") // 유저 등급 상승.
+    @GetMapping("put/{id}") // 유저 등급 상승.
     public User editRoleById(@PathVariable Long id) {
         return userService.editRole(id);
     }
 
+    @GetMapping("uput/{id}")
+    public User edit2RoleById(@PathVariable Long id){
+        return userService.edit2Role(id);
+    }
+
 
     // -------------DELETE METHOD-------------- //
-    @DeleteMapping("/{id}") // 유저 퇴출.
+    @GetMapping("/{id}") // 유저 퇴출.
     public void deleteUser(@PathVariable Long id) {
         userService.deleteUserById(id);
     }

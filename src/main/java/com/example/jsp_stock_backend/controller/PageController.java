@@ -29,10 +29,9 @@ public class PageController {
 
     // DEFAULT PAGE
     @GetMapping("")
-    public String indexPage(HttpSession session) {
+    public String indexPage() {
         return "index.jsp";
     }
-
 
     // JOIN IN
     @GetMapping("/join")
@@ -46,16 +45,17 @@ public class PageController {
         return "login.jsp";
     }
 
+    // USER INFOMATION
     @GetMapping("/user-info")
     public String userInfo() {
         return "user-info.jsp";
     }
 
+    // GET WORDCLOUD
     @GetMapping("/get-demo")
-    public String getDemo(HttpServletRequest req, HttpServletResponse res, HttpSession session) {
+    public String getDemo() {
         return "get-demo.jsp";
     }
-
 
     // -------------------- POST CONTROLLER -------------------------- \\
 
@@ -121,6 +121,4 @@ public class PageController {
 
         return "login.jsp";
     }
-
-
 }

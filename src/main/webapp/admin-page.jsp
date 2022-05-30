@@ -41,7 +41,7 @@
 
         function upbtnOnclick(e) {
             let id = e.name.charAt(e.name.length - 1)
-            fetch("http://localhost:8090/api/v1/put/" + id)
+            fetch("http://192.168.239.181:8090/api/v1/put/" + id)
                 .then((res) => console.log(res))
 
             location.reload()
@@ -49,7 +49,7 @@
 
         function dnbtnOnclick(e) {
             let id = e.name.charAt(e.name.length - 1)
-            fetch("http://localhost:8090/api/v1/uput/" + id)
+            fetch("http://192.168.239.181:8090/api/v1/uput/" + id)
                 .then((res) => console.log(res))
 
             location.reload()
@@ -58,7 +58,7 @@
         function banbtnOnclick(e) {
             let id = e.name.charAt(e.name.length - 1)
 
-            fetch("http://localhost:8090/api/v1/delete/" + id)
+            fetch("http://192.168.239.181:8090/api/v1/delete/" + id)
                 .then((res) => console.log(res))
 
             location.reload()
@@ -69,7 +69,7 @@
         let n = 0
 
         fetch
-        ("http://localhost:8090/api/v1/users")
+        ("http://192.168.239.181:8090/api/v1/users")
             .then((res) => res.json())
             .then((data) => {
                 data.forEach((item) => {

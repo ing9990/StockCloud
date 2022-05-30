@@ -30,7 +30,7 @@
     </div>
     <div style="width: 30%">
 
-        <form action="http://localhost:8090/join-process" method="post" class="row g-4" id="join-form">
+        <form action="http://192.168.239.181:8090/join-process" method="post" class="row g-4" id="join-form">
             <div class="col-md-12">
                 <label for="validationServer01" class="form-label">ID</label>
                 <input type="text" class="form-control is-valid" name="id" id="validationServer01" value="" placeholder="ID" required>

@@ -2,13 +2,11 @@ let token = 0
 let is_checked = false
 
 function demoEvent() {
-    const spring_server_path = "192.168.137.248"
-    const host_url_path = "localhost"
 
     console.log("Hello, World")
     alert("워드 클라우드를 생성하시겠습니까?")
 
-    fetch("http://" + host_url_path + ":8090/api/v1")
+    fetch("http://192.168.239.181:8090/api/v1")
         .then((res) => {
             console.log(res)
         })
@@ -20,9 +18,11 @@ function sendmail() {
 
     alert("이메일이 전송되었습니다.")
 
-    fetch("http://localhost:8090/api/v1/mail/" + username + "/" + email)
+    fetch("http://192.168.239.181:8090/api/v1/mail/" + username + "/" + email)
         .then((res) => res.json())
         .then((data) => token = data)
+
+    console.log(username+"님의 토큰은 "+ token+"입니다.")
 
 }
 

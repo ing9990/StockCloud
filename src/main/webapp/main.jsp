@@ -14,7 +14,6 @@
 <body>
 <jsp:include page="components/header.jsp"/>
 <h1>환영합니다. <%= (String) session.getAttribute("username")%>님 </h1>
-<h3 style="text-align: center"><%= (String) session.getAttribute("letters")%></h3>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

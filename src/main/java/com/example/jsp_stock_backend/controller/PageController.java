@@ -57,7 +57,7 @@ public class PageController {
         return "get-demo.jsp";
     }
 
-    // -------------------- POST CONTROLLER -------------------------- \\
+    // -------------------- POST CONTROLLER -----------ㄴ--------------- \\
 
     // JOIN - PROCESS
     @PostMapping("/join-process")
@@ -70,7 +70,8 @@ public class PageController {
         String email = req.getParameter("email");
 
         loginService.addUser(name, id, password, email);
-        log.info(name + "님이 등록되었습니다.");
+        log.info(name + "님이 회원가입 했습니다.");
+
         return "login.jsp";
     }
 
@@ -99,6 +100,8 @@ public class PageController {
                 session.setAttribute("login_password", dto.getUser_login_password());
                 session.setAttribute("role", dto.getRole());
                 session.setAttribute("email", dto.getUser_email());
+
+                log.info(session.getAttribute("username") + "님이 로그인 하셨습니다.");
 
                 return "main.jsp";
             }

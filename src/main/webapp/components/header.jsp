@@ -17,6 +17,13 @@
         </a>
 
         <ul class="nav nav-pills">
+
+            <li class="nav-item">
+                <a href="../invest.jsp" class="nav-link">
+                    모의 투자
+                </a>
+            </li>
+
             <li class="nav-item">
                 <a href="../get-demo.jsp" class="nav-link">
                     데모 신청
@@ -30,8 +37,8 @@
             </li>
 
             <li class="nav-item">
-                <form action="http://localhost:8090/logout-process" id="form-1" method="post">
-                    <a href="javascript:document.getElementById('form-1').submit()" class="nav-link">로그 아웃</a>
+                <form action="http://192.168.83.181:8090/logout-process" id="form-logout" method="post">
+                    <a href="javascript:document.getElementById('form-logout').submit()" class="nav-link">로그 아웃</a>
                 </form>
             </li>
 
@@ -41,7 +48,7 @@
 
 </div>
 
-<script src="../js/script.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/demo-script.js"></script>
 </body>
 </html>

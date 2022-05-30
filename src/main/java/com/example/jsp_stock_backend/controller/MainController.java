@@ -33,7 +33,7 @@ public class MainController {
     @GetMapping("/mail/{username}/{email}")
     public String mail(@PathVariable String username, @PathVariable String email, HttpSession session) {
         userService.sendMail(username, email);
-        log.info(MailService.token);
+        log.info(username + "님의 인증번호가 [" + MailService.token + "]로 생성되었습니다.");
         return MailService.token;
     }
 
@@ -88,13 +88,13 @@ public class MainController {
     }
 
     @GetMapping("uput/{id}")
-    public User edit2RoleById(@PathVariable Long id){
+    public User edit2RoleById(@PathVariable Long id) {
         return userService.edit2Role(id);
     }
 
 
     // -------------DELETE METHOD-------------- //
-    @GetMapping("/{id}") // 유저 퇴출.
+    @GetMapping("delete/{id}") // 유저 퇴출.
     public void deleteUser(@PathVariable Long id) {
         userService.deleteUserById(id);
     }

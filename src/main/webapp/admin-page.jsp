@@ -12,11 +12,12 @@
 </head>
 <body>
 
-<%--<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-arrow-left"
+
+<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-arrow-left"
      viewBox="0 0 16 16" onclick="history.back()">
     <path fill-rule="evenodd"
           d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
-</svg>--%>
+</svg>
 
 <table id="user_table" class="table table-bordered"
        style="width: 80%; table: white; margin: 0 auto;">
@@ -39,9 +40,11 @@
 
     <script>
 
+        const path = "http://192.168.83.181:8090/"
+
         function upbtnOnclick(e) {
             let id = e.name.charAt(e.name.length - 1)
-            fetch("http://192.168.239.181:8090/api/v1/put/" + id)
+            fetch(path + "api/v1/put/" + id)
                 .then((res) => console.log(res))
 
             location.reload()
@@ -49,7 +52,7 @@
 
         function dnbtnOnclick(e) {
             let id = e.name.charAt(e.name.length - 1)
-            fetch("http://192.168.239.181:8090/api/v1/uput/" + id)
+            fetch(path + "api/v1/uput/" + id)
                 .then((res) => console.log(res))
 
             location.reload()
@@ -58,7 +61,7 @@
         function banbtnOnclick(e) {
             let id = e.name.charAt(e.name.length - 1)
 
-            fetch("http://192.168.239.181:8090/api/v1/delete/" + id)
+            fetch(path + "api/v1/delete/" + id)
                 .then((res) => console.log(res))
 
             location.reload()
@@ -69,7 +72,7 @@
         let n = 0
 
         fetch
-        ("http://192.168.239.181:8090/api/v1/users")
+        (path + "api/v1/users")
             .then((res) => res.json())
             .then((data) => {
                 data.forEach((item) => {

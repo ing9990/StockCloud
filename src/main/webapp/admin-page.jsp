@@ -19,6 +19,8 @@
           d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
 </svg>
 
+<button onclick="demoEvent()" class="btn btn-primary">워드 클라우드 새로고침</button>
+
 <table id="user_table" class="table table-bordered"
        style="width: 80%; table: white; margin: 0 auto;">
     <thead>
@@ -36,7 +38,6 @@
     </thead>
 
     <tbody id="tbody">
-
 
     <script>
 
@@ -67,6 +68,13 @@
             location.reload()
         }
 
+        function demoEvent() {
+            fetch(path + "api/v1")
+                .then((res) => {
+                    console.log(res)
+                })
+        }
+
 
         const table = document.getElementById("user_table")
         let n = 0
@@ -91,7 +99,6 @@
                     const doname = "do" + item.user_id
                     const bnname = "bn" + item.user_id
 
-                    console.log(suname)
 
                     let btn1 = "<button type=button name=" + suname + " onclick='upbtnOnclick(this)' class=btn btn-success>UP</button>";
                     let btn1_2 = "<button type=button name=" + doname + " onclick='dnbtnOnclick(this)' class=btn btn-success>DOWN</button>";
@@ -113,6 +120,7 @@
     </tbody>
 </table>
 
+<script src="js/demo-script.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -11,10 +11,10 @@
 </head>
 <body style="text-align: center;">
 <jsp:include page="components/header.jsp"/>
-
+<%--
 <script>
     demoEvent()
-</script>
+</script>--%>
 
 <img style="border: 1px solid black;" id="cloud-img" class="img-thumbnail"
      src="./img/<%=new SimpleDateFormat("yyyyMMdd").format(Calendar.getInstance().getTime())+".png"%>"

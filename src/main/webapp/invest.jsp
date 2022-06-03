@@ -3,6 +3,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="sweetalert2.all.min.js"></script>
     <link rel="stylesheet" href="https://getbootstrap.com/docs/5.0/dist/css/bootstrap.min.css">
     <meta charset="UTF-8">
     <title>모의 투자</title>
@@ -10,37 +13,144 @@
 <body>
 <jsp:include page="components/header.jsp"/>
 
-<!-- TradingView Widget BEGIN -->
-<div class="tradingview-widget-container">
-    <div id="tradingview_fd401"></div>
-    <div class="tradingview-widget-copyright"><a href="https://kr.tradingview.com/symbols/KRX-005930/" rel="noopener"
-                                                 target="_blank"><span class="blue-text"></span></a></div>
-    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
-    <script type="text/javascript">
-        new TradingView.widget(
-            {
-                "autosize": false,
-                "symbol": "KRX:005930",
-                "interval": "1",
-                "timezone": "Asia/Seoul",
-                "theme": "light",
-                "style": "1",
-                "locale": "kr",
-                "toolbar_bg": "#f1f3f6",
-                "enable_publishing": false,
-                "hide_top_toolbar": true,
-                "hide_legend": true,
-                "allow_symbol_change": true,
-                "save_image": false,
-                "container_id": "tradingview_fd401"
-            }
-        );
-    </script>
+<%--
+CODE WRITE HERE !!
+--%>
 
 
+<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel"
+     style="width: 80%; margin:auto; text-align:center;">
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <!-- item s -->
+            <h2 class="card-title">비트 코인</h2><br>
+            <div class="card-img-top tradingview-widget-container" style="width:100%; margin:auto;">
+                <div id="tradingview_c1ee1"></div>
+                <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+                <script type="text/javascript">
+                    new TradingView.widget(
+                        {
+                            "autosize": false,
+                            "symbol": "BITSTAMP:BTCUSD",
+                            "interval": "1",
+                            "timezone": "Asia/Seoul",
+                            "theme": "light",
+                            "style": "1",
+                            "locale": "kr",
+                            "toolbar_bg": "#f1f3f6",
+                            "enable_publishing": false,
+                            "hide_legend": true,
+                            "hide_side_toolbar": false,
+                            "allow_symbol_change": true,
+                            "container_id": "tradingview_9edd1"
+                        }
+                    );
+                </script>
+            </div>
+            <br>
 
+            <p class="card-text">무릎에 매수하고 어깨에 매도하라.</p>
+
+            <script>
+                async function ff(stockName) {
+                    const {value: numberOfStock} = await Swal.fire({
+                        title: stockName,
+                        input: 'text',
+                        inputLabel: '몇주 주문하시겠습니까?',
+                        inputPlaceholder: '1'
+                    })
+
+                    if (numberOfStock * stockPrice > <%=session.getAttribute("money")%>) {
+                        Swal.fire("금액이 부족합니다.")
+                    } else {
+                        Swal.fire(stockName + "을 " + numberOfStock + "주 주문하셨습니다.")
+                    }
+
+
+                }
+            </script>
+
+            <button type="button" onclick="ff('휴림로봇')" class="btn btn-danger">매수</button>
+            <button type="button" class="btn btn-primary">매도</button>
+            <!-- item e -->
+        </div>
+        <div class="carousel-item">
+            <!-- item s -->
+            <h3 class="card-title">휴림 로봇</h3><br>
+            <div class="card-img-top tradingview-widget-container" style="width:100%; margin:auto;">
+                <div id="tradingview_c1ee3"></div>
+                <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+                <script type="text/javascript">
+                    new TradingView.widget(
+                        {
+                            "autosize": false,
+                            "symbol": "KRX:090710",
+                            "interval": "1",
+                            "timezone": "Asia/Seoul",
+                            "theme": "light",
+                            "style": "1",
+                            "locale": "kr",
+                            "toolbar_bg": "#f1f3f6",
+                            "enable_publishing": false,
+                            "hide_legend": true,
+                            "hide_side_toolbar": false,
+                            "allow_symbol_change": true,
+                            "container_id": "tradingview_9edd1"
+                        }
+                    );
+                </script>
+            </div>
+            <br>
+            <p class="card-text">난 이거 1파로 본다.</p>
+
+
+            <button type="button" class="btn btn-danger">매수</button>
+            <button type="button" class="btn btn-primary">매도</button>
+            <!-- item e -->
+        </div>
+        <div class="carousel-item">
+            <!-- item s -->
+            <h3 class="card-title">삼성 전자</h3><br>
+            <div class="tradingview-widget-container">
+                <div id="tradingview_23f10"></div>
+                <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+                <script type="text/javascript">
+                    new TradingView.widget(
+                        {
+                            "autosize": false,
+                            "symbol": "KRX:005930",
+                            "interval": "1",
+                            "timezone": "Asia/Seoul",
+                            "theme": "light",
+                            "style": "1",
+                            "locale": "kr",
+                            "toolbar_bg": "#f1f3f6",
+                            "enable_publishing": false,
+                            "hide_legend": true,
+                            "hide_side_toolbar": false,
+                            "allow_symbol_change": true,
+                            "container_id": "tradingview_9edd1"
+                        }
+                    );
+                </script>
+            </div>
+            <br>
+            <p class="card-text">10년 투자안할 주식, 10분도 보유말라.</p>
+            <button type="button" class="btn btn-danger">매수</button>
+            <button type="button" class="btn btn-primary">매도</button>
+
+            <!-- item e -->
+        </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true" style="background-color:gray"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true" style="background-color:gray"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
 </div>
-<!-- TradingView Widget END -->
 
 <script src="js/demo-script.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>

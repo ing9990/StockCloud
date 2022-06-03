@@ -48,6 +48,8 @@ public class User {
     @Column(name = "USER_CREATED_AT")
     private LocalDateTime created_at = LocalDateTime.now(); //USER CREATED DATE
 
+    @Column(name = "USER_MONEY")
+    private int money = 1000000;
 
 }
 

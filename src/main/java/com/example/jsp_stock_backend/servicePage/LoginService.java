@@ -7,6 +7,7 @@ package com.example.jsp_stock_backend.servicePage;
 
 import com.example.jsp_stock_backend.domain.User;
 import com.example.jsp_stock_backend.dto.UserDto;
+import com.example.jsp_stock_backend.dto.UserEdItDto;
 import com.example.jsp_stock_backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,7 @@ public class LoginService {
     private final UserRepository userRepository; //DI
 
 
-    public void addUser(String name, String id, String password,String email) {
+    public void addUser(String name, String id, String password, String email) {
         User user = new User();
 
         user.setLogin_id(id);
@@ -63,4 +64,6 @@ public class LoginService {
 
         return dto;
     }
+
+
 }

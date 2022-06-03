@@ -1,19 +1,25 @@
 package com.example.jsp_stock_backend.service;
 
 import com.example.jsp_stock_backend.domain.Role;
-import com.example.jsp_stock_backend.domain.Stock;
 import com.example.jsp_stock_backend.domain.User;
 import com.example.jsp_stock_backend.dto.AddStockDto;
 import com.example.jsp_stock_backend.dto.AddUserDto;
+import com.example.jsp_stock_backend.dto.UserEdItDto;
 import com.example.jsp_stock_backend.mod.pythonTest.Main;
-import com.example.jsp_stock_backend.repository.StockRepository;
 import com.example.jsp_stock_backend.repository.UserRepository;
 import com.example.jsp_stock_backend.serviceMail.MailService;
 import com.example.jsp_stock_backend.utils.GivenUsername;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -29,7 +35,6 @@ import java.util.Map;
 public class UserService {
 
     public final UserRepository userRepository;
-    public final StockRepository stockRepository;
     public final GivenUsername givenUsername;
     private final MailService mailService;
 
@@ -115,27 +120,9 @@ public class UserService {
     }
 
 
-    public void stockParse(AddStockDto addStockDto) {
 
-        stockRepository.deleteAll();
-
-        for (int i = 0; i < addStockDto.getStock_name().size(); i++) {
-
-            int rank = addStockDto.getStock_rank().get(i);
-            String name = addStockDto.getStock_name().get(i);
-            int price = addStockDto.getStock_price().get(i);
-            int change_price = addStockDto.getChange_price_day().get(i);
-            double change_per_day = addStockDto.getChage_per_day().get(i);
-            int totalprice = addStockDto.getTotal_price().get(i);
-            int tradingVol = addStockDto.getTrading_volume().get(i);
-
-            stockRepository.save(new Stock(name, rank, price, change_price, totalprice, change_per_day, tradingVol));
-        }
-
-    }
-
-    public void sendMail(String username,String email) {
-        mailService.sendMail(username,email);
+    public void sendMail(String username, String email) {
+        mailService.sendMail(username, email);
     }
 
     public User edit2Role(Long id) {
@@ -161,5 +148,40 @@ public class UserService {
         userRepository.save(user);
 
         return user;
+    }
+
+    public String editUserInfo(Long id, UserEdItDto dto) {
+
+        var user = userRepository.findById(id).orElseThrow(RuntimeException::new);
+        String name = user.getUsername();
+
+        System.out.println(user);
+
+        user.setLogin_id(dto.getInfoUserId());
+        user.setLogin_password(dto.getInfoUserPassword());
+        user.setRole(dto.getInfoUserRole());
+        user.setUsername(dto.getInfoUserName());
+        user.setEmail(dto.getInfoUserEmail());
+
+        userRepository.save(user);
+
+        return name;
+    }
+
+    @SneakyThrows
+    public String getStockcode(String stockname) {
+
+        String url = "https://kr.investing.com/search/?q=" + stockname;
+
+        Document document = null;
+        document = Jsoup.connect(url).get();
+
+        Elements el = document.body().getElementsByClass("js-inner-all-results-quotes-wrapper newResultsContainer quatesTable");
+        Element el2 = el.get(0);
+
+        Elements result = el2.getElementsByClass("second");
+        System.out.println(result.get(0).text());
+
+        return result.get(0).text();
     }
 }

@@ -2,8 +2,12 @@
 
 `웹 소켓과 실시간 주가 API를 활용하여 모의투자 서비스와 거래량 워드 클라우드를 제공하는 프로젝트`
 
-## 사용 기술
+`GITHUB TAG`
 
+* `github.com/ing9990`
+* `github.com/NYH0227`
+
+## 사용 기술
 
 ### **FRONT END**
 
@@ -24,7 +28,6 @@
 - Servlet JSTL
 - Lombok
 
-
 ### **TRADING**
 
 - Web Socket
@@ -39,9 +42,11 @@
 - Beautiful Soup
 
 ### **DATABASE**
+
 - MySQL
 
 ### **API TEST**
+
 - POSTMAN
 
 ## 기능

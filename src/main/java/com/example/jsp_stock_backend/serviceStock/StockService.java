@@ -26,28 +26,33 @@ public class StockService {
 
 
     // 같은 종목을 구매한 내역이 있는지 확인하는 메서드
-    private boolean is_exist_stock(String stockname) {
-        return tradeRepository.findAll().stream().anyMatch((x) -> x.getStockname().equals(stockname));
+    private boolean is_exist_stock(String stockname, Long user_id) {
+        return tradeRepository.findAll().stream().anyMatch((x) -> x.getStockname().equals(stockname) && x.getUser_id() == user_id);
     }
 
 
     @Transactional
     public void buyStock(BuyStockVO buyStockvo) {
 
-        Trade trade = new Trade();
-        boolean is_exist = is_exist_stock(buyStockvo.getStock_name());
+        Trade trade = new Trade(); // 이미 종목이 있다면
+        boolean is_exist = is_exist_stock(buyStockvo.getStock_name(), buyStockvo.getUser_id());
 
         // 주식 구매 로직 & 평단가 계산 로직.
         if (is_exist) {
             tradeRepository.findAll().forEach((x) -> {
-                if (x.getStockname().equals(buyStockvo.getStock_name())) {
+                if (x.getStockname().equals(buyStockvo.getStock_name()) && x.getUser_id() == buyStockvo.getUser_id()) {
+
+                    var user = userRepository.findById(x.getUser_id())
+                            .orElseThrow(RuntimeException::new);
+
+                    user.setMoney(user.getMoney() - buyStockvo.getPrice() * buyStockvo.getCount());
+
                     x.setPrice(((x.getPrice() * x.getCount()) + (buyStockvo.getCount() * buyStockvo.getPrice())) / (x.getCount() + buyStockvo.getCount()));
                     x.setCount(x.getCount() + buyStockvo.getCount());
+
                     return;
                 }
             });
-
-
         } else {
             // 주식 구매 로직
 
@@ -103,5 +108,11 @@ public class StockService {
             }
         }
         return list;
+    }
+
+    public int getMoney(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(RuntimeException::new)
+                .getMoney();
     }
 }

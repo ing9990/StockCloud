@@ -107,8 +107,23 @@
 <!-- 사이드 바 -->
 <div id="mySidebar" class="sidebar" onclick="closeNav()">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+
     <h5 style="color: white; padding: 4px 4px 4px 32px;"><%=session.getAttribute("username")%> 님의 지갑</h5>
-    <a href="#">소지금 : <%=session.getAttribute("money")%>  ₩</a>
+
+
+    <%--
+            1. http://192.168.252.181:8090/api/v2/stock/`2` -> `n`번 User의 보유 종목을 조회.
+            2. http://192.168.252.181:8090/api/v2/money/`2` -> `n`번 User의 보유 현금을 조회.
+    --%>
+
+    <a href="#" id="my-money-a"></a>
+
+    <script>
+        function tmp_change_money() {
+            axios.get("http://192.168.252.181:8090/api/v2/money/" + <%=session.getAttribute("id")%>)
+                .then((res) => document.getElementById("my-money-a").innerText = "소지금: " + res.data + "₩")
+        }
+    </script>
 
     <a href="#">
         <%=session.getAttribute("stock_name1")%> : <%=session.getAttribute("stock_num1")%>  주
@@ -118,6 +133,7 @@
 
     <a href="#">하마 : 100 주<br>평균 단가 : 19140</a>
     <a href="#">삼성 : 10 주<br>평균 단가 : 67740</a>
+
 </div>
 
 <!-- 메인 -->
@@ -136,7 +152,7 @@
                     <button id="hokaregButton1" class="btn btn-outline-secondary" type="button" id="button-addon1">
                         종목검색
                     </button>
-                    <input type="text" id="inputMessage1" value="090710" class="form-control" placeholder=""
+                    <input type="text" id="inputMessage1" class="form-control" placeholder="삼성전자"
                            aria-label="Example text with button addon" aria-describedby="button-addon1">
                 </div>
                 <!-- 차트 -->
@@ -384,9 +400,25 @@ TEST<br>
 <script>
     var is_open_Nav = 0;
 
+    let my_stock = []
+
+    function tmp_chagne_stock() {
+        axios.get(path + "api/v2/stock/" + <%=session.getAttribute("id")%>)
+            .then((res) => my_stock = res.data)
+
+        my_stock.map(
+            (x) => {
+                console.log(x)
+            }
+        )
+    }
+
     function openNav() {
         document.getElementById("mySidebar").style.width = "250px";
         document.getElementById("main").style.marginLeft = "250px";
+
+        tmp_change_money()
+        tmp_chagne_stock()
 
         if (is_open_Nav) {
             closeNav();

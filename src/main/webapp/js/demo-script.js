@@ -1,15 +1,9 @@
 let token = 0
 let is_checked = false
-
-
-const path = "http://192.168.83.181:8090/"
+const path = "http://192.168.252.181:8090/"
 
 
 function demoEvent() {
-
-    console.log("Hello, World")
-    alert("워드 클라우드를 생성하시겠습니까?")
-
     fetch(path + "api/v1")
         .then((res) => {
             console.log(res)
@@ -34,6 +28,46 @@ function sendmail() {
 
     console.log(username + "님의 토큰은 " + token + "입니다.")
 }
+
+
+function editUserInfo(e) {
+
+    let infoUserId = document.getElementById("iloginid").value
+    let infoUserPassword = document.getElementById("ipassword").value
+    let infoUserRole = document.getElementById("irole").value
+    let infoUserName = document.getElementById("iusername").value
+    let infoUserEmail = document.getElementById("iemail").value
+
+    console.log("id: " + infoUserId.toString())
+    console.log("pw: " + infoUserPassword.toString())
+
+    let data = {
+        "infoUserId": infoUserId,
+        "infoUserPassword": infoUserPassword,
+        "infoUserRole": infoUserRole,
+        "infoUserName": infoUserName,
+        "infoUserEmail": infoUserEmail
+    }
+
+    fetch(path + "api/v1/editUserInfo/" + e, {
+        method: "put",
+        headers: {
+            'Accept': '*/*',
+            'Accept-Encoding': 'gzip, deflate, br',
+            'Connection': 'keep-alive',
+            'User-Agent': 'PostmanRuntime/7.29.0',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data),
+    })
+        .then((res) => console.log(res))
+
+    alert("변경이 완료되었습니다.")
+
+    window.history.back()
+    location.reload()
+}
+
 
 function checkingToken() {
     const c = document.getElementById("token_input").value

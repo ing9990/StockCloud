@@ -2,6 +2,10 @@ server:
   port: 8090
 
 spring:
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
   datasource:
     url: jdbc:mysql://localhost:3306/stock
     username: root
@@ -9,11 +13,6 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-#    properties:
-#      hibernate:
-#        format_sql: true
-#        show_sql: true
-
   mail:
     host: smtp.gmail.com
     port: 587

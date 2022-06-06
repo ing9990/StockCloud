@@ -69,3 +69,23 @@
 - __`종목이름으로 종목코드를 가져오는 기능`__
 - __`주식 실시간 시세 api와 웹 소켓을 사용한 모의 투자 기능`__
 - __`나의 수익률과 회원 중 수익률 랭킹을 확인하는 기능`__
+
+</br>
+
+### `API`
+
+|    API Addr                  |     METHOD                |  Description          |
+|---|---|  ---|
+|http://localhost:8090/api/v1/mail/{username}/{email}   | GET |  이메일 인증 키 발송    |
+|http://localhost:8090/api/v1/users | GET  | 유저 리스트 조회  |
+|http://localhost:8090/api/v1/user/id/{id} | GET   |  유저 ID 조회 |
+|http://localhost:8090/api/v1/get-stockcode/{stockname} | GET  | 종목명으로 종목코드 검색  |
+|http://localhost:8090/api/v1/   | POST    |  유저 회원가입   |
+|http://localhost:8090/api/v1/put/{id}   | PUT  |  유저 등급 상승 |
+|http://localhost:8090/api/v1/uput/{id}  | PUT  | 유저 등급 강등 |
+|http://localhost:8090/api/v1/delete/{id}   |DELETE   | 유저 퇴출 |
+|http://localhost:8090/api/v1/editUserInfo/{id}   | PUT  | 회원 정보 수정 |
+|http://localhost:8090/api/v2/stock/{id} | GET  | 보유 종목 조회 |
+|http://localhost:8090/api/v2/money/{id} | GET   | 보유 현금 조회 |
+|http://localhost:8090/api/v2/stock/buy  | POST | 종목 매수 {RequestBody} |
+|http://localhost:8090/api/v2/stock/sell   | POST   | 종목 매도 {RequestBody} |

@@ -91,16 +91,11 @@
 </head>
 
 
-<body>
-<!-- Test -->
-<%
-    session.setAttribute("username", "나영환");
-    session.setAttribute("money", 10000);
+<script>
+    let search_stockname = "삼성전자"
+</script>
 
-    session.setAttribute("stock_name1", "휴림로봇");
-    session.setAttribute("stock_num1", 24);
-    session.setAttribute("stock_price1", 3300);
-%>
+<body>
 <jsp:include page="components/header.jsp"/>
 
 
@@ -120,19 +115,16 @@
 
     <script>
         function tmp_change_money() {
-            axios.get("http://192.168.252.181:8090/api/v2/money/" + <%=session.getAttribute("id")%>)
+            axios.get(path + "api/v2/money/" + <%=session.getAttribute("id")%>)
                 .then((res) => document.getElementById("my-money-a").innerText = "소지금: " + res.data + "₩")
         }
     </script>
 
-    <a href="#">
-        <%=session.getAttribute("stock_name1")%> : <%=session.getAttribute("stock_num1")%>  주
-        <br>
-        평균 단가 : <%=session.getAttribute("stock_price1")%>
-    </a>
 
-    <a href="#">하마 : 100 주<br>평균 단가 : 19140</a>
-    <a href="#">삼성 : 10 주<br>평균 단가 : 67740</a>
+    <%--    보유 종목 넣기 --%>
+    <div id="myStockData">
+
+    </div>
 
 </div>
 
@@ -347,9 +339,9 @@
                 </div>
                 <div style="text-align:center; margin:0px 20px;">
                     <br>
-                    <button type="button" onclick=sell_stock() class="btn btn-primary" style="margin:5px 10px;">매수
+                    <button type="button" onclick=buy() class="btn btn-primary" style="margin:5px 10px;">매수
                     </button>
-                    <button type="button" onclick=buy_stock() class="btn btn-danger" style="margin:5px 10px;">매도
+                    <button type="button" onclick=sell_stock() class="btn btn-danger" style="margin:5px 10px;">매도
                     </button>
                 </div>
             </div>
@@ -401,6 +393,8 @@ TEST<br>
     var is_open_Nav = 0;
 
     let my_stock = []
+    tmp_change_money()
+    tmp_chagne_stock()
 
     function tmp_chagne_stock() {
         axios.get(path + "api/v2/stock/" + <%=session.getAttribute("id")%>)
@@ -408,7 +402,15 @@ TEST<br>
 
         my_stock.map(
             (x) => {
-                console.log(x)
+                document.getElementById("myStockData").innerHTML = "";
+
+                my_stock.map(
+                    (x) => {
+                        console.log(x);
+                        document.getElementById("myStockData").innerHTML += '<a href="#">' + x.stockname + ' : ' + x.count + '주 <br>평균 단가 : ' + x.price + '</a>';
+
+                    }
+                )
             }
         )
     }
@@ -437,45 +439,95 @@ TEST<br>
 <!-- 매수,매도 스크립트 -->
 <script>
     <%-- var stockname = <%=session.getAttribute("stock_name1")%>; --%>
-    var num = <%=session.getAttribute("stock_num1")%>;
-    var price =
-    <%=session.getAttribute("stock_price1")%>
-    var money = <%=session.getAttribute("money")%>
 
+    let money = 0
 
-        async function sell_stock() {
-            swal({
-                title: "몇 주 구매하시겠습니까?",
-                text: "",
-                content: "input",
-                buttons: true,
-            })
-                .then((value) => {
-                    if (value) {
-                        if (money < document.getElementById("up1").innerText * value) {
-                            swal("금액이 부족합니다");
-                        } else if (value <= 0) {
-                            swal("실패");
-                        } else {
-                            swal("구매 성공", "<%=session.getAttribute("stock_name1")%>를 " + value + "주 구매했습니다.", "success");
-                        }
-                    } else {
-                        swal("취소하였습니다.");
-                    }
-                });
-        }
+    axios.get(path + "api/v2/money/" +<%=session.getAttribute("id")%>)
+        .then((res) => money = res.data)
 
-    async function buy_stock() {
+    async function buy() {
+
         swal({
-            title: "몇 주 판매하시겠습니까?",
-            text: "현재 보유 주식은 " + num + " 주입니다.",
+            title: "몇 주 구매하시겠습니까?",
+            text: "",
             content: "input",
             buttons: true,
         })
             .then((value) => {
                 if (value) {
-                    if (value <= num) {
-                        swal("판매 성공", "<%=session.getAttribute("stock_name1")%>를 " + value + "주 판매했습니다.", "success");
+                    if (money < document.getElementById("up1").innerText * value) {
+                        swal("금액이 부족합니다");
+                    } else if (value <= 0) {
+                        swal("실패");
+                    } else {
+
+                        swal("구매 성공", search_stockname + "를 " + value + "주 구매했습니다.", "success");
+
+                        let data = {
+                            "user_id": <%=session.getAttribute("id")%>,
+                            "stock_name": search_stockname,
+                            "price": document.getElementById("up1").innerText,
+                            "count": value
+                        }
+
+                        axios.post(path + "api/v2/stock/buy", data)
+
+                    }
+                } else {
+                    swal("취소하였습니다.");
+                }
+            });
+    }
+
+
+    let flag = false
+    let haven = 0
+
+    function get_stock_list() {
+        axios.get(path + "api/v2/stock/" + <%=session.getAttribute("id")%>)
+            .then((res) => {
+                my_stock = res.data
+                console.log(my_stock)
+            })
+    }
+
+    function sell_stock() {
+
+        get_stock_list();
+
+        my_stock.forEach((x) => {
+            if (x.stockname === search_stockname) {
+                flag = true
+                haven = x.count
+            }
+        })
+
+
+        swal({
+            title: "몇 주 판매하시겠습니까?",
+            text: search_stockname + "을 " + haven + "주 보유 중입니다.",
+            content: "input",
+            buttons: true,
+        })
+            .then((value) => {
+                if (value) {
+                    if (value <= haven) {
+                        swal("판매 성공", search_stockname + "을" + value + "주 판매했습니다.", "success");
+
+                        let data = {
+                            "user_id": <%=session.getAttribute("id")%>,
+                            "stock_name": search_stockname,
+                            "price": document.getElementById("down1").innerText,
+                            "count": value
+                        }
+
+                        axios.post(path + "api/v2/stock/sell",
+                            data)
+                            .then((res) => {
+                                console.log("매도 완료.")
+                                get_stock_list()
+                            })
+
                     } else {
                         swal("보유 주식보다 많습니다.");
                     }
@@ -581,8 +633,6 @@ TEST<br>
                 /* test 끝 */
 
 
-                document.getElementById("setTitleStockname") = strResult[0] // Title 종목코드 세팅
-
                 y_Value = strResult[3]; // 차트용 y축 데이터
 
                 /* 매도 */
@@ -636,9 +686,11 @@ TEST<br>
             // 입력받은 데이터
             var stockcode_tmp = document.getElementById("inputMessage1").value;
 
+            document.getElementById("setTitleStockname").innerText = stockcode_tmp
+            search_stockname = stockcode_tmp
 
             // ########################
-            axios.get("http://localhost:8090/api/v1/get-stockcode/" + stockcode_tmp)
+            axios.get(path + "api/v1/get-stockcode/" + stockcode_tmp)
                 .then((res) => stockcode_tmp = res.data)
 
 

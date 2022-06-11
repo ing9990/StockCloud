@@ -38,8 +38,6 @@ public class StockController {
         return stockService.getMoney(id);
     }
 
-
-    // 매수
     @PostMapping("/stock/buy")
     public void buy_stock(@RequestBody BuyStockVO buyStockvo) {
 
@@ -50,8 +48,6 @@ public class StockController {
         stockService.buyStock(buyStockvo);
     }
 
-
-    // 매도
     @PostMapping("/stock/sell")
     public void sell_stock(@RequestBody SellStockVO sellStockvo) {
         log.info(sellStockvo.getUser_id() + "번 유저가 "
@@ -60,6 +56,4 @@ public class StockController {
 
         stockService.sellStock(sellStockvo);
     }
-
-
 }

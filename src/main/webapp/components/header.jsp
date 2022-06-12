@@ -19,14 +19,14 @@
         <ul class="nav nav-pills">
 
             <li class="nav-item">
-                <a href="../invest.jsp" class="nav-link">
+                <a href="invest.jsp" class="nav-link">
                     모의 투자
                 </a>
             </li>
 
             <li class="nav-item">
                 <a href="../get-demo.jsp" class="nav-link">
-                    데모 신청
+                    클라우드
                 </a>
             </li>
 
@@ -37,7 +37,7 @@
             </li>
 
             <li class="nav-item">
-                <form action="http://192.168.83.181:8090/logout-process" id="form-logout" method="post">
+                <form action="http://192.168.252.181:8090/logout-process" id="form-logout" method="post">
                     <a href="javascript:document.getElementById('form-logout').submit()" class="nav-link">로그 아웃</a>
                 </form>
             </li>

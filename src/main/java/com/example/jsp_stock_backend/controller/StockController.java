@@ -38,6 +38,12 @@ public class StockController {
         return stockService.getMoney(id);
     }
 
+    @GetMapping("/all_money/{id}")
+    public int getAllMoney(@PathVariable Long id) {
+        log.info(id + "번 회원의 총 자산을 조회합니다.");
+        return stockService.getAllMoney(id);
+    }
+
     @PostMapping("/stock/buy")
     public void buy_stock(@RequestBody BuyStockVO buyStockvo) {
 

@@ -8,6 +8,7 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="sweetalert2.all.min.js"></script>
+    <script src=".\crypto-js.min.js"></script>
     <script src="https://code.highcharts.com/stock/highstock.js"></script>
     <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/stock/modules/export-data.js"></script>
@@ -90,12 +91,8 @@
 </head>
 
 
-<script>
-    let search_stockname = "삼성전자"
-    let data = [];
-</script>
-
 <body>
+
 <jsp:include page="components/header.jsp"/>
 
 
@@ -115,16 +112,19 @@
 
     <script>
         function tmp_change_money() {
-            axios.get(path + "api/v2/money/" + <%=session.getAttribute("id")%>)
+            axios.get("http://192.168.252.181:8090/api/v2/money/" + <%=session.getAttribute("id")%>)
                 .then((res) => document.getElementById("my-money-a").innerText = "소지금: " + res.data + "₩")
         }
     </script>
 
+    <a href="#">
+        <%=session.getAttribute("stock_name1")%> : <%=session.getAttribute("stock_num1")%>  주
+        <br>
+        평균 단가 : <%=session.getAttribute("stock_price1")%>
+    </a>
 
-    <%--    보유 종목 넣기 --%>
-    <div id="myStockData">
-
-    </div>
+    <a href="#">하마 : 100 주<br>평균 단가 : 19140</a>
+    <a href="#">삼성 : 10 주<br>평균 단가 : 67740</a>
 
 </div>
 
@@ -150,28 +150,249 @@
                 <!-- 차트 -->
                 <div id="container" style="height: 550px; width : 100%; min-width: 310px;"></div>
             </div>
-
-            <div style="text-align:center; margin:0px 20px;">
-                <br>
-                <button type="button" onclick=buy() class="btn btn-primary" style="margin:5px 10px;">매수
-                </button>
-                <button type="button" onclick=sell_stock() class="btn btn-danger" style="margin:5px 10px;">매도
-                </button>
+            <!-- 호가창 -->
+            <div class="col-3">
+                <div class="upPrice" style="background-color:#BFDFFF;">
+                    <div class="row">
+                        <div class="col" style="text-align:left">
+                            <div id="up10_num">10000</div>
+                        </div>
+                        <div class="col" style="text-align:center; background-color:#A8C8F9;">
+                            <div id="up10">5000</div>
+                        </div>
+                        <div class="col" style="text-align:right"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col" style="text-align:left">
+                            <div id="up9_num">10000</div>
+                        </div>
+                        <div class="col" style="text-align:center; background-color:#A8C8F9;">
+                            <div id="up9">5000</div>
+                        </div>
+                        <div class="col" style="text-align:right"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col" style="text-align:left">
+                            <div id="up8_num">10000</div>
+                        </div>
+                        <div class="col" style="text-align:center; background-color:#A8C8F9;">
+                            <div id="up8">5000</div>
+                        </div>
+                        <div class="col" style="text-align:right"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col" style="text-align:left">
+                            <div id="up7_num">10000</div>
+                        </div>
+                        <div class="col" style="text-align:center; background-color:#A8C8F9;">
+                            <div id="up7">5000</div>
+                        </div>
+                        <div class="col" style="text-align:right"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col" style="text-align:left">
+                            <div id="up6_num">10000</div>
+                        </div>
+                        <div class="col" style="text-align:center; background-color:#A8C8F9;">
+                            <div id="up6">5000</div>
+                        </div>
+                        <div class="col" style="text-align:right"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col" style="text-align:left">
+                            <div id="up5_num">10000</div>
+                        </div>
+                        <div class="col" style="text-align:center; background-color:#A8C8F9;">
+                            <div id="up5">5000</div>
+                        </div>
+                        <div class="col" style="text-align:right"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col" style="text-align:left">
+                            <div id="up4_num">10000</div>
+                        </div>
+                        <div class="col" style="text-align:center; background-color:#A8C8F9;">
+                            <div id="up4">5000</div>
+                        </div>
+                        <div class="col" style="text-align:right"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col" style="text-align:left">
+                            <div id="up3_num">10000</div>
+                        </div>
+                        <div class="col" style="text-align:center; background-color:#A8C8F9;">
+                            <div id="up3">5000</div>
+                        </div>
+                        <div class="col" style="text-align:right"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col" style="text-align:left">
+                            <div id="up2_num">10000</div>
+                        </div>
+                        <div class="col" style="text-align:center; background-color:#A8C8F9;">
+                            <div id="up2">5000</div>
+                        </div>
+                        <div class="col" style="text-align:right"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col" style="text-align:left">
+                            <div id="up1_num">1234</div>
+                        </div>
+                        <div class="col" style="text-align:center; background-color:#A8C8F9;">
+                            <div id="up1">0</div>
+                        </div>
+                        <div class="col" style="text-align:right"></div>
+                    </div>
+                </div>
+                <!-- 매도 -->
+                <div style="background-color:#FFDDDD;">
+                    <div class="row">
+                        <div class="col" style="text-align:left"></div>
+                        <div class="col" style="text-align:center; background-color:#FFCCCC;">
+                            <div id="down1">0</div>
+                        </div>
+                        <div class="col" style="text-align:right">
+                            <div id="down1_num">1234</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col" style="text-align:left"></div>
+                        <div class="col" style="text-align:center; background-color:#FFCCCC;">
+                            <div id="down2">5000</div>
+                        </div>
+                        <div class="col" style="text-align:right">
+                            <div id="down2_num">10000</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col" style="text-align:left"></div>
+                        <div class="col" style="text-align:center; background-color:#FFCCCC;">
+                            <div id="down3">5000</div>
+                        </div>
+                        <div class="col" style="text-align:right">
+                            <div id="down3_num">10000</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col" style="text-align:left"></div>
+                        <div class="col" style="text-align:center; background-color:#FFCCCC;">
+                            <div id="down4">5000</div>
+                        </div>
+                        <div class="col" style="text-align:right">
+                            <div id="down4_num">10000</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col" style="text-align:left"></div>
+                        <div class="col" style="text-align:center; background-color:#FFCCCC;">
+                            <div id="down5">5000</div>
+                        </div>
+                        <div class="col" style="text-align:right">
+                            <div id="down5_num">10000</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col" style="text-align:left"></div>
+                        <div class="col" style="text-align:center; background-color:#FFCCCC;">
+                            <div id="down6">5000</div>
+                        </div>
+                        <div class="col" style="text-align:right">
+                            <div id="down6_num">10000</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col" style="text-align:left"></div>
+                        <div class="col" style="text-align:center; background-color:#FFCCCC;">
+                            <div id="down7">5000</div>
+                        </div>
+                        <div class="col" style="text-align:right">
+                            <div id="down7_num">10000</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col" style="text-align:left"></div>
+                        <div class="col" style="text-align:center; background-color:#FFCCCC;">
+                            <div id="down8">5000</div>
+                        </div>
+                        <div class="col" style="text-align:right">
+                            <div id="down8_num">10000</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col" style="text-align:left"></div>
+                        <div class="col" style="text-align:center; background-color:#FFCCCC;">
+                            <div id="down9">5000</div>
+                        </div>
+                        <div class="col" style="text-align:right">
+                            <div id="down9_num">10000</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col" style="text-align:left"></div>
+                        <div class="col" style="text-align:center; background-color:#FFCCCC;">
+                            <div id="down10">5000</div>
+                        </div>
+                        <div class="col" style="text-align:right">
+                            <div id="down10_num">10000</div>
+                        </div>
+                    </div>
+                </div>
+                <div style="text-align:center; margin:0px 20px;">
+                    <br>
+                    <button type="button" onclick=sell_stock() class="btn btn-primary" style="margin:5px 10px;">매수
+                    </button>
+                    <button type="button" onclick=buy_stock() class="btn btn-danger" style="margin:5px 10px;">매도
+                    </button>
+                </div>
             </div>
-
         </div>
     </div>
 </div>
+
+
+<!-- Test -->
+TEST<br>
+<button type="button" class="btn btn-primary" onclick=test1()>500원 up</button>
+<button type="button" class="btn btn-primary" onclick=test2()>500원 down</button>
+<!-- Test  -->
+
+
+<!-- 화요일에 확인하고 0%로 바꾸기 -->
+<!-- api 호가창 로그 -->
+<pre id="output" style="width: 100%; height: 100%; overflow: auto;"></pre>
+
+<!-- api 소켓 로그 -->
+<div style="opacity: 0%; width: 0%; height: 0%; box-sizing: border-box">
+    <pre id="output3" style="width: 100%; height: 10%; overflow: auto;"></pre>
+    <button id="closeButton" type="button" style="width: 0%; height: 0%;"></button>
 </div>
 
 
+<!-- Test 버튼 script -->
+<script>
+    function test1() {
+        y_Value += 500;
+
+        document.getElementById("up1").innerText = y_Value;
+        document.getElementById("down1").innerText = y_Value - 500;
+        document.getElementById("up1_num").innerText = Math.round(Math.random() * 10000);
+        document.getElementById("down1_num").innerText = Math.round(Math.random() * 10000);
+    }
+
+    function test2() {
+        y_Value -= 500;
+        document.getElementById("up1").innerText = y_Value;
+        document.getElementById("down1").innerText = y_Value - 500;
+        document.getElementById("up1_num").innerText = Math.round(Math.random() * 10000);
+        document.getElementById("down1_num").innerText = Math.round(Math.random() * 10000);
+    }
+</script>
+
 <!-- 사이드바 스크립트 -->
 <script>
-    let is_open_Nav = 0;
+    var is_open_Nav = 0;
 
     let my_stock = []
-    tmp_change_money()
-    tmp_chagne_stock()
 
     function tmp_chagne_stock() {
         axios.get(path + "api/v2/stock/" + <%=session.getAttribute("id")%>)
@@ -179,13 +400,7 @@
 
         my_stock.map(
             (x) => {
-                document.getElementById("myStockData").innerHTML = "";
-
-                my_stock.map(
-                    (x) => {
-                        document.getElementById("myStockData").innerHTML += '<a href="#">' + x.stockname + ' : ' + x.count + '주 <br>평균 단가 : ' + x.price + '</a>';
-                    }
-                )
+                console.log(x)
             }
         )
     }
@@ -213,95 +428,46 @@
 
 <!-- 매수,매도 스크립트 -->
 <script>
-
-    let money = 0
-
-    axios.get(path + "api/v2/money/" +<%=session.getAttribute("id")%>)
-        .then((res) => money = res.data)
-
-    function buy() {
-
-        swal({
-            title: "몇 주 구매하시겠습니까?",
-            text: "",
-            content: "input",
-            buttons: true,
-        })
-            .then((value) => {
-                if (value) {
-                    if (money < document.getElementById("up1").innerText * value) {
-                        swal("금액이 부족합니다");
-                    } else if (value <= 0) {
-                        swal("실패");
-                    } else {
-
-                        swal("구매 성공", search_stockname + "를 " + value + "주 구매했습니다.", "success");
-
-                        let data = {
-                            "user_id": <%=session.getAttribute("id")%>,
-                            "stock_name": search_stockname,
-                            "price": 0,
-                            "count": value
-                        }
-
-                        axios.post(path + "api/v2/stock/buy", data)
-
-                    }
-                } else {
-                    swal("취소하였습니다.");
-                }
-            });
-    }
+    <%-- var stockname = <%=session.getAttribute("stock_name1")%>; --%>
+    var num = <%=session.getAttribute("stock_num1")%>;
+    var price =
+    <%=session.getAttribute("stock_price1")%>
+    var money = <%=session.getAttribute("money")%>
 
 
-    let flag = false
-    let haven = 0
-
-    function get_stock_list() {
-        axios.get(path + "api/v2/stock/" + <%=session.getAttribute("id")%>)
-            .then((res) => {
-                my_stock = res.data
-                console.log(my_stock)
+        async function sell_stock() {
+            swal({
+                title: "몇 주 구매하시겠습니까?",
+                text: "",
+                content: "input",
+                buttons: true,
             })
-    }
+                .then((value) => {
+                    if (value) {
+                        if (money < document.getElementById("up1").innerText * value) {
+                            swal("금액이 부족합니다");
+                        } else if (value <= 0) {
+                            swal("실패");
+                        } else {
+                            swal("구매 성공", "<%=session.getAttribute("stock_name1")%>를 " + value + "주 구매했습니다.", "success");
+                        }
+                    } else {
+                        swal("취소하였습니다.");
+                    }
+                });
+        }
 
-    function sell_stock() {
-
-        get_stock_list();
-
-        my_stock.forEach((x) => {
-            if (x.stockname === search_stockname) {
-                flag = true
-                haven = x.count
-            }
-        })
-
-
+    async function buy_stock() {
         swal({
             title: "몇 주 판매하시겠습니까?",
-            text: search_stockname + "을 " + haven + "주 보유 중입니다.",
+            text: "현재 보유 주식은 " + num + " 주입니다.",
             content: "input",
             buttons: true,
         })
             .then((value) => {
                 if (value) {
-                    if (value <= haven) {
-                        swal("판매 성공", search_stockname + "을" + value + "주 판매했습니다.", "success");
-
-                        let data = {
-                            "user_id": <%=session.getAttribute("id")%>,
-                            "stock_name": search_stockname,
-                            "price": 0,
-                            "count": value
-                        }
-
-                        axios.post(path + "api/v2/stock/sell",
-                            data)
-                            .then((res) => {
-                                console.log("매도 완료.")
-                                get_stock_list()
-                            })
-
+                    if (value <= num) {
+                        swal("판매 성공", "<%=session.getAttribute("stock_name1")%>를 " + value + "주 판매했습니다.", "success");
                     } else {
                         swal("보유 주식보다 많습니다.");
                     }
@@ -315,33 +481,200 @@
 
 <!-- 소켓+차트 스크립트 -->
 <script>
-    window.onload = function () {
-        document.getElementById("hokaregButton1").onclick = function () {
-            data = []
+    /* Key : 개인키 ,secretKey, 법인키 */
 
-            let stockcode_tmp = document.getElementById("inputMessage1").value; // 입력받은 데이터
-            document.getElementById("setTitleStockname").innerText = stockcode_tmp
-            search_stockname = stockcode_tmp
+    var g_app_key = "PSzBwHatpt7f6QlGEHfm8UE7eEDylF8PIgjp"
+    var g_appsecret = "cGNrKD2UWdIthk1dayDf6MXVraS/VTQk8+u3+2v5goXDNlp/ctBkKnlwK/56c208Qp/U78Zjzx8bGq5p3k5C9eq+9VhEOfKfQlsksnH+yJp9g1vC5WIE6xQ1Oo/NIoww5fF+jEsJ6lHM3/26kyi0dexVJSPB72vzc8wXJ74RKPp9mpQpILY=";
+    var g_personalseckey = "nKVixJKIVll+Ro8PTPHDVssdCX5Y2zA5fsjhclkjBBgHiHYmNoc3aq36pj61GKMqD2XmEExcXd6siqzJM6w0CmkY9UUwSmmFItBjhQh5EdufRZhCRq80Ld0LeMXqTxUZpcOgkghjp26oDQm4SpSIPzY5LH3ObQH0DTgCPjdS8aNzs88KkUk=";	// 테스트 후 삭제
 
-            // ########################
-            axios.get(path + "api/v1/get-stockcode/" + stockcode_tmp)
-                .then((res) => {
-                    stockcode1 = res.data
-                    console.log(res.data)
-                })
+    /* button action 시 stockcode 저장 전역변수 */
+    var stockcode1 = "";
+    var ping = 0;
+
+    /* 차트 y축 값 */
+    var y_Value = 0;
+
+    // 모르겠다
+    var escapable = /[\x00-\x1f\ud800-\udfff\u200c\u2028-\u202f\u2060-\u206f\ufff0-\uffff]/g;
+
+    function filterUnicode(quoted) {
+        escapable.lastIndex = 0;
+        if (!escapable.test(quoted)) return quoted;
+
+        return quoted.replace(escapable, function (a) {
+            return '';
+        });
+    }
+
+    // websocket 접속
+    try {
+        url = "ws://ops.koreainvestment.com:21000";
+
+        w = new WebSocket(url);
+        w.onopen = function () {
+            let t = setInterval(function () {
+                if (ws.readyState != 1) {
+                    clearInterval(t);
+                    return;
+                }
+                w.send('{type:"ping"}');
+            }, 55000);
+        };
+    } catch (e) {
+    }
+
+    // 출력처리, 실시간 로그 확인용이라 지워도 상관 없음
+    var log = function (s, f) {
+        //console.log(s);
+        if (document.readyState !== "complete") {
+            log.buffer.push(s);
+        } else {
+            if (f == 1) {
+                document.getElementById("output").style.fontSize = "12px";
+                document.getElementById("output").innerHTML += (s + "\n");
+            } else if (f == 2) {
+                document.getElementById("output_1").style.fontSize = "12px";
+                document.getElementById("output_1").innerHTML += (s + "\n");
+            }
+        }
+    }
+    log.buffer = [];
+
+
+    // 소켓에서 데이터 전송이 있을 때 function
+    w.onmessage = function (e) {
+        // unicode 처리
+        var recvdata = filterUnicode(e.data);
+
+        // 첫데이터가 0이나 1일경우 수신된 실시간 데이터 이므로 다음 단계를 통해 처리한다.
+        if (recvdata[0] == 0 || recvdata[0] == 1) {
+            var strArray = recvdata.split('|');	// 구분자로 문자열 자르기
+
+            var trid = strArray[1];		// Tr ID
+            var bodydata = (strArray[3]);	// 수신받은 데이터 중 실시간데이터 부분
+            if (trid == "H0STCNT0" || trid == "K0STCNT0") {
+                console.log(bodydata);
+            }
+
+            if (trid == "H0STASP0" && strArray[0] == 0) {	// 주식호가
+                // 수신 받은 데이터 처리
+                var strResult = bodydata.split('^');
+                var screenflag = 0;
+                if (stockcode1 == strResult[0]) {
+                    screenflag = 1;
+                    document.getElementById("output").innerHTML = ("");
+                }
+
+                /* test 로그 */
+                log("종목코드[" + strResult[0] + "]\n", screenflag);
+                log("매수 가격 : " + strResult[3] + "   잔량[" + strResult[23] + "]", screenflag);
+                log("매도 가격 : " + strResult[13] + "   잔량[" + strResult[33] + "]", screenflag);
+                log("누적거래량 :" + strResult[53], screenflag);
+                /* test 끝 */
+
+
+                document.getElementById("setTitleStockname") = strResult[0] // Title 종목코드 세팅
+
+                y_Value = strResult[3]; // 차트용 y축 데이터
+
+                /* 매도 */
+                document.getElementById("up10").innerHTML = strResult[12];
+                document.getElementById("up10_num").innerHTML = strResult[32];
+                document.getElementById("up9").innerHTML = strResult[11];
+                document.getElementById("up9_num").innerHTML = strResult[31];
+                document.getElementById("up8").innerHTML = strResult[10];
+                document.getElementById("up8_num").innerHTML = strResult[30];
+                document.getElementById("up7").innerHTML = strResult[9];
+                document.getElementById("up7_num").innerHTML = strResult[29];
+                document.getElementById("up6").innerHTML = strResult[8];
+                document.getElementById("up6_num").innerHTML = strResult[28];
+                document.getElementById("up5").innerHTML = strResult[7];
+                document.getElementById("up5_num").innerHTML = strResult[27];
+                document.getElementById("up4").innerHTML = strResult[6];
+                document.getElementById("up4_num").innerHTML = strResult[26];
+                document.getElementById("up3").innerHTML = strResult[5];
+                document.getElementById("up3_num").innerHTML = strResult[25];
+                document.getElementById("up2").innerHTML = strResult[4];
+                document.getElementById("up2_num").innerHTML = strResult[24];
+                document.getElementById("up1").innerHTML = strResult[3];
+                document.getElementById("up1_num").innerHTML = strResult[23];
+                /* 매수 */
+                document.getElementById("down1").innerHTML = strResult[13];
+                document.getElementById("down1_num").innerHTML = strResult[33];
+                document.getElementById("down2").innerHTML = strResult[14];
+                document.getElementById("down2_num").innerHTML = strResult[34];
+                document.getElementById("down3").innerHTML = strResult[15];
+                document.getElementById("down3_num").innerHTML = strResult[35];
+                document.getElementById("down4").innerHTML = strResult[16];
+                document.getElementById("down4_num").innerHTML = strResult[36];
+                document.getElementById("down5").innerHTML = strResult[17];
+                document.getElementById("down5_num").innerHTML = strResult[37];
+                document.getElementById("down6").innerHTML = strResult[18];
+                document.getElementById("down6_num").innerHTML = strResult[38];
+                document.getElementById("down7").innerHTML = strResult[19];
+                document.getElementById("down7_num").innerHTML = strResult[39];
+                document.getElementById("down8").innerHTML = strResult[20];
+                document.getElementById("down8_num").innerHTML = strResult[40];
+                document.getElementById("down9").innerHTML = strResult[21];
+                document.getElementById("down9_num").innerHTML = strResult[41];
+                document.getElementById("down10").innerHTML = strResult[22];
+                document.getElementById("down10_num").innerHTML = strResult[42];
+            }
         }
     }
 
-    let myName = document.getElementById("inputMessage1").value;
+    window.onload = function () {
+        document.getElementById("hokaregButton1").onclick = function () {
+            // 입력받은 데이터
+            var stockcode_tmp = document.getElementById("inputMessage1").value;
+
+
+            // ########################
+            axios.get("http://localhost:8090/api/v1/get-stockcode/" + stockcode_tmp)
+                .then((res) => stockcode_tmp = res.data)
+
+
+            stockcode1 = stockcode_tmp;
+            // 주식호가 등록용 json 데이터를 만드는 부분
+            var result = '{"header": {"authoriztion":"","appkey":"' + g_app_key + '","appsecret":"' + g_appsecret + '","personalseckey":"' + g_personalseckey + '","custtype":"P","tr_type":"1","content-type":"utf-8"},"body": {"input": {"tr_id":"H0STASP0","tr_key":"' + stockcode1 + '"}}}';
+
+            try {
+                // 만들어진 json 데이터를 websocket으로 전송한다.
+                w.send(result);
+            } catch (e) {
+            }
+        }
+        // 정지 버튼 처리
+        document.getElementById("bidderegButton1").onclick = function () {
+            // textbox 에서 종목코드를 가져온다.
+            stockcode1 = document.getElementById("inputMessage1").value;
+            // 전송할 json
+            var result = '{"header":{"authoriztion":"","appkey":"' + g_app_key + '","appsecret":"' + g_appsecret + '","personalseckey":"' + g_personalseckey + '","custtype":"P","tr_type":"2","content-type":"utf-8"},"body": {"input": {"tr_id":"H0STCNT0","tr_key":"' + stockcode1 + '"}}}';
+            stockcode1 = "";
+            try {
+                // json을 연결된 소켓으로 전송한다.
+                w.send(result);
+            } catch (e) {
+            }
+        }
+
+        // 웹소켓 해제
+        document.getElementById("closeButton").onclick = function () {
+            w.close();
+        }
+    }
+
+    // ############### 차트 스크립트
+    var myName = document.getElementById("inputMessage1").value;
     Highcharts.stockChart('container', {
         chart: {
             events: {
                 load: function () {
-                    let series = this.series[0];
+                    var series = this.series[0];
                     setInterval(function () {
-                        let x = (new Date()).getTime(); // x축
-                        let y = 0
-                        series.addPoint([x, y], true, true); // 여기가 차트 수정 위치
+                        var x = (new Date()).getTime(); // x축
+                        //var y = Math.round(Math.random() * 67000); // 테스트용 랜덤값
+                        series.addPoint([x, y_Value], true, true); // 여기가 차트 수정 위치
                     }, 1000);
                 }
             }
@@ -376,9 +709,9 @@
         series: [{
             name: myName,
             data: (function () {
-                data = []
-                let time = (new Date()).getTime();
-                let i;
+                var data = [];
+                var time = (new Date()).getTime();
+                var i;
                 // 차트 과거는 0으로 초기화
                 for (i = -999; i <= 0; i += 1) {
                     data.push([time + i * 1000, 0]);

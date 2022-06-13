@@ -41,19 +41,33 @@ public class StockController {
     @PostMapping("/stock/buy")
     public void buy_stock(@RequestBody BuyStockVO buyStockvo) {
 
-        log.info(buyStockvo.getUser_id() + "번 유저가 "
-                + buyStockvo.getStock_name() + " " + buyStockvo.getCount()
-                + "주를 매수하셨습니다.");
+        log.info(buyStockvo.getUser_id() + "번 유저가 " + buyStockvo.getStock_name() + " " + buyStockvo.getCount() + "주를 매수하셨습니다.");
 
         stockService.buyStock(buyStockvo);
     }
 
     @PostMapping("/stock/sell")
     public void sell_stock(@RequestBody SellStockVO sellStockvo) {
-        log.info(sellStockvo.getUser_id() + "번 유저가 "
-                + sellStockvo.getStock_name() + " " + sellStockvo.getCount()
-                + "주를 매도 했습니다.");
+        log.info(sellStockvo.getUser_id() + "번 유저가 " + sellStockvo.getStock_name() + " " + sellStockvo.getCount() + "주를 매도 했습니다.");
 
         stockService.sellStock(sellStockvo);
+    }
+
+    @GetMapping("/stock/appkey/{id}")
+    public String get_appkey(@PathVariable Long id) {
+        log.info(id + "번 유저가 APPKEY를 조회합니다.");
+        return stockService.getAppKey(id);
+    }
+
+    @GetMapping("/stock/appsec/{id}")
+    public String get_appsec(@PathVariable Long id) {
+        log.info(id + "번 유저가 APP SECRET을 조회합니다.");
+        return stockService.getAppSec(id);
+    }
+
+    @GetMapping("/stock/appper/{id}")
+    public String get_appper(@PathVariable Long id) {
+        log.info(id + "번 유저가 개인 키를 조회합니다.");
+        return stockService.getAppPer(id);
     }
 }

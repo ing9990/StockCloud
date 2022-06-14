@@ -11,43 +11,43 @@
 
 ### **FRONT END**
 
-- JSP
-- JS
-- SweetAlert
-- Bootstrap
-- CSS
+- __`JSP`__
+- __`JS`__
+- __`SweetAlert`__
+- __`Bootstrap`__
+- __`CSS`__
 
 ### **BACK END**
 
-- Spring MVC
-- Spring Boot
-- Spring Data Jpa
-- Spring Boot Email
-- Google SMTP
-- JSoup
-- Servlet JSTL
-- Lombok
+- __`Spring MVC`__
+- __`Spring Boot`__
+- __`Spring Data Jpa`__
+- __`Spring Boot Email`__
+- __`Google SMTP`__
+- __`JSoup`__
+- __`Servlet JSTL`__
+- __`Lombok`__
 
 ### **TRADING**
 
-- Web Socket
-- Trading View
+- __`Web Socket`__
+- __`Trading View`__
 
 ### **UTILITY**
 
-- Python
-- Jupyter Notebook
-- Anaconda
-- WordCloud
-- Beautiful Soup
+- __`Python`__
+- __`Jupyter Notebook`__
+- __`Anaconda`__
+- __`WordCloud`__
+- __`Beautiful Soup`__
 
 ### **DATABASE**
 
-- MySQL
+- __`MySQL`__
 
 ### **API TEST**
 
-- POSTMAN
+- __`POSTMAN`__
 
 ## 기능
 

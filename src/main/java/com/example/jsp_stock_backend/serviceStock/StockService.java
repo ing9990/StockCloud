@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
 @RequiredArgsConstructor
@@ -42,8 +43,7 @@ public class StockService {
             tradeRepository.findAll().forEach((x) -> {
                 if (x.getStockname().equals(buyStockvo.getStock_name()) && x.getUser_id() == buyStockvo.getUser_id()) {
 
-                    var user = userRepository.findById(x.getUser_id())
-                            .orElseThrow(RuntimeException::new);
+                    var user = userRepository.findById(x.getUser_id()).orElseThrow(RuntimeException::new);
 
                     user.setMoney(user.getMoney() - buyStockvo.getPrice() * buyStockvo.getCount());
 
@@ -111,8 +111,31 @@ public class StockService {
     }
 
     public int getMoney(Long id) {
-        return userRepository.findById(id)
-                .orElseThrow(RuntimeException::new)
-                .getMoney();
+        return userRepository.findById(id).orElseThrow(RuntimeException::new).getMoney();
+    }
+
+    public String getAppKey(Long id) {
+        return userRepository.findById(id).orElseThrow(RuntimeException::new).getAppkey();
+    }
+
+    public String getAppSec(Long id) {
+        return userRepository.findById(id).orElseThrow(RuntimeException::new).getAppsec();
+    }
+
+    public String getAppPer(Long id) {
+        return userRepository.findById(id).orElseThrow(RuntimeException::new).getAppper();
+    }
+
+    public int getAllMoney(Long id) {
+        int cash = userRepository.getById(id).getMoney();
+        AtomicInteger stock_money = new AtomicInteger();
+
+        tradeRepository.findAll().forEach((x) -> {
+            if (x.getUser_id() == id) {
+                stock_money.addAndGet(x.getPrice() * x.getCount());
+            }
+        });
+
+        return cash + stock_money.get();
     }
 }

@@ -5,13 +5,14 @@ package com.example.jsp_stock_backend.controller;
  */
 
 
+import com.example.jsp_stock_backend.domain.Role;
+import com.example.jsp_stock_backend.dto.UserEdItDto;
 import com.example.jsp_stock_backend.serviceMail.MailService;
 import com.example.jsp_stock_backend.servicePage.LoginService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -57,6 +58,7 @@ public class PageController {
         return "get-demo.jsp";
     }
 
+
     // -------------------- POST CONTROLLER -----------ㄴ--------------- \\
 
     // JOIN - PROCESS
@@ -78,6 +80,7 @@ public class PageController {
     // LOGIN - PROCESS
     @PostMapping("/login-process")
     public String loginPage(HttpServletRequest req, HttpServletResponse res, HttpSession session) {
+        log.info("로그인 시도");
         session.removeAttribute("username");
 
         String id = req.getParameter("id");
@@ -93,7 +96,7 @@ public class PageController {
                 var dto = loginService.getUser(id, pw);
 
                 session.setAttribute("id", dto.getUser_id()); // Long Type PK ID
-                session.setAttribute("is_login", "");    //
+                session.setAttribute("is_login", "");    // is_login ?
 
                 session.setAttribute("username", name);
                 session.setAttribute("login_id", dto.getUser_login_id()); // String Type LOGIN ID
@@ -111,12 +114,12 @@ public class PageController {
         }
     }
 
+
     // logout
     @PostMapping("/logout-process")
     public String logout(HttpServletRequest req, HttpServletResponse res, HttpSession session) {
 
         session.removeAttribute("id");
-
         session.removeAttribute("username");
         session.removeAttribute("login_id");
         session.removeAttribute("login_password");

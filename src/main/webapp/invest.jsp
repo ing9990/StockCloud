@@ -536,6 +536,8 @@
                         swal("정수만 입력해주세요. \n" + "입력한 값: " + value)
                     } else if (document.getElementById("down1").innerText == "0") {
                         swal("정규 장이 종료되었습니다.")
+                    } else if (value <= -1) {
+                        swal("음수는 매도할 수 없습니다.")
                     } else if (value <= haven) {
                         swal("판매 성공", reulReturner(search_stockname) + "" + value + "주 판매했습니다.", "success");
 

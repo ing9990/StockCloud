@@ -30,12 +30,12 @@
 
 ### **TRADING**
 
-- Web Socket
-- Trading View
+- __`Web Socket`__
+- __`Trading View`__
 
 ### **UTILITY**
 
-- Python
+- __`Python`__
 - Jupyter Notebook
 - Anaconda
 - WordCloud

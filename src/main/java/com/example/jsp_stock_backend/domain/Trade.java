@@ -25,7 +25,6 @@ public class Trade {
     private String username;
 
     // 종목 이름
-    @Column(unique = true)
     private String stockname;
 
     // 구매 가격

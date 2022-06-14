@@ -420,6 +420,27 @@
         document.getElementById("main").style.marginLeft = "5%";
         is_open_Nav = 0;
     }
+
+    function reulReturner(label) {
+
+        var strGA = 44032; //가
+        var strHI = 55203; //힣
+
+        var lastStrCode = label.charCodeAt(label.length-1);
+        var prop=true;
+        var msg;
+
+        if (( lastStrCode - strGA ) % 28 == 0) prop = false;
+
+        if(prop) {
+            msg = label+'을';
+        }
+        else {
+            msg = label+'를';
+        }
+        return msg;
+    }
+
 </script>
 
 <!-- 매수,매도 스크립트 -->
@@ -433,7 +454,7 @@
     async function buy_stock() {
 
         swal({
-            title: search_stockname + "을 몇 주 매수하시겠습니까?",
+            title: reulReturner(search_stockname) + " 몇 주 매수하시겠습니까?",
             text: "",
             content: "input",
             buttons: true,
@@ -449,7 +470,10 @@
                     } else if (document.getElementById("up1").innerText == "0") {
                         swal("정규 장이 마감되었습니다.")
                     } else {
-                        swal("구매 성공", search_stockname + "를 " + value + "주 매수했습니다.\n\n매수 가격: " + getDotPrice(document.getElementById("up1").innerText) + "원" + "\n\n보유 현금: " + money.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + "원", "success");
+
+
+                        money -= document.getElementById("up1").innerText * value
+                        swal("구매 성공", reulReturner(search_stockname) + " " + value + "주 매수했습니다.\n\n매수 가격: " + getDotPrice(document.getElementById("up1").innerText) + "원\n\n매수 총액: " + getDotPrice(document.getElementById("up1").innerText * value) + "원" + "\n\n보유 현금: " + money.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + "원", "success");
 
                         let data = {
                             "user_id": <%=session.getAttribute("id")%>,
@@ -503,7 +527,7 @@
 
         swal({
             title: "몇 주 판매하시겠습니까?",
-            text: search_stockname + "을 " + haven + "주 보유 중입니다.",
+            text: reulReturner(search_stockname) + " " + haven + "주 보유 중입니다.",
             content: "input",
             buttons: true,
         })
@@ -514,7 +538,7 @@
                     } else if (document.getElementById("down1").innerText == "0") {
                         swal("정규 장이 종료되었습니다.")
                     } else if (value <= haven) {
-                        swal("판매 성공", search_stockname + "을" + value + "주 판매했습니다.", "success");
+                        swal("판매 성공", reulReturner(search_stockname) + "" + value + "주 판매했습니다.", "success");
 
                         let data = {
                             "user_id": <%=session.getAttribute("id")%>,

@@ -89,3 +89,6 @@
 |http://localhost:8090/api/v2/money/{id} | GET   | 보유 현금 조회 |
 |http://localhost:8090/api/v2/stock/buy  | POST | 종목 매수 {RequestBody} |
 |http://localhost:8090/api/v2/stock/sell   | POST   | 종목 매도 {RequestBody} |
+|http://localhost:8090/api/v2/stock/appkey/{id} | GET | APPKEY 가져오기   |
+|http://localhost:8090/api/v2/stock/appsec/{id} | GET | APP SECRET 가져오기   |
+|http://localhost:8090/api/v2/stock/appper/{id} | GET | APP PERSONAL 가져오기  |

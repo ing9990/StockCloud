@@ -426,17 +426,16 @@
         var strGA = 44032; //가
         var strHI = 55203; //힣
 
-        var lastStrCode = label.charCodeAt(label.length-1);
-        var prop=true;
+        var lastStrCode = label.charCodeAt(label.length - 1);
+        var prop = true;
         var msg;
 
-        if (( lastStrCode - strGA ) % 28 == 0) prop = false;
+        if ((lastStrCode - strGA) % 28 == 0) prop = false;
 
-        if(prop) {
-            msg = label+'을';
-        }
-        else {
-            msg = label+'를';
+        if (prop) {
+            msg = label + '을';
+        } else {
+            msg = label + '를';
         }
         return msg;
     }

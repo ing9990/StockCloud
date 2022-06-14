@@ -117,14 +117,14 @@
     <script>
         function tmp_change_money() {
             axios.get(path + "api/v2/money/" + <%=session.getAttribute("id")%>)
-                .then((res) => document.getElementById("my-money-a").innerText = "소지금: " + res.data + "₩")
+                .then((res) => document.getElementById("my-money-a").innerText = "소지금: " + res.data.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + " ₩")
         }
     </script>
 
     <script>
         function tmp_change_all_money() {
             axios.get(path + "api/v2/all_money/" + <%=session.getAttribute("id")%>)
-                .then((res) => document.getElementById("my_all_money").innerText = "총 자산 : " + res.data + "₩")
+                .then((res) => document.getElementById("my_all_money").innerText = "총 자산 : " + res.data.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + " ₩")
         }
     </script>
 
@@ -374,6 +374,10 @@
     let is_open_Nav = 0;
     let my_stock = []
 
+    function getDotPrice(n) {
+        return n.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")
+    }
+
     tmp_change_money()
     tmp_change_all_money()
     tmp_change_stock()
@@ -429,7 +433,7 @@
     async function buy_stock() {
 
         swal({
-            title: "몇 주 구매하시겠습니까?",
+            title: search_stockname + "을 몇 주 매수하시겠습니까?",
             text: "",
             content: "input",
             buttons: true,
@@ -445,7 +449,7 @@
                     } else if (document.getElementById("up1").innerText == "0") {
                         swal("정규 장이 마감되었습니다.")
                     } else {
-                        swal("구매 성공", search_stockname + "를 " + value + "주 구매했습니다.", "success");
+                        swal("구매 성공", search_stockname + "를 " + value + "주 매수했습니다.\n\n매수 가격: " + getDotPrice(document.getElementById("up1").innerText) + "원" + "\n\n보유 현금: " + money.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + "원", "success");
 
                         let data = {
                             "user_id": <%=session.getAttribute("id")%>,
@@ -700,21 +704,33 @@
             let my_search_code = ""
             let my_search_name = stockcode_tmp
 
-            document.getElementById("setTitleStockname").innerText = stockcode_tmp
-            search_stockname = stockcode_tmp
+            let flagtmp = true
 
             axios.get(path + "api/v1/get-stockcode/" + my_search_name)
                 .then((res) => {
                     my_search_code = res.data
                     stockcode1 = res.data
+                    if (res.data === "NOCATCH") {
+                        flagtmp = false
+                    }
                 })
-                .then(() => {
-                    let result = '{"header": {"authoriztion":"","appkey":"' + g_app_key + '","appsecret":"' + g_appsecret + '","personalseckey":"' + g_personalseckey + '","custtype":"P","tr_type":"1","content-type":"utf-8"},"body": {"input": {"tr_id":"H0STASP0","tr_key":"' + my_search_code + '"}}}';
+                .then((res) => {
 
-                    try {
-                        w.send(result);
-                    } catch (e) {
+                    if (!flagtmp) {
+                        swal("존재하지 않는 종목입니다.")
+                    } else {
 
+                        document.getElementById("setTitleStockname").innerText = stockcode_tmp
+                        search_stockname = stockcode_tmp
+
+                        let result = '{"header": {"authoriztion":"","appkey":"' + g_app_key + '","appsecret":"' + g_appsecret + '","personalseckey":"' + g_personalseckey + '","custtype":"P","tr_type":"1","content-type":"utf-8"},"body": {"input": {"tr_id":"H0STASP0","tr_key":"' + my_search_code + '"}}}';
+
+                        try {
+                            w.send(result);
+                        } catch (e) {
+
+                        }
+                        flagtmp = true
                     }
                 })
         }

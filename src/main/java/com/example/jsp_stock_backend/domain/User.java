@@ -49,8 +49,16 @@ public class User {
     private LocalDateTime created_at = LocalDateTime.now(); //USER CREATED DATE
 
     @Column(name = "USER_MONEY")
-    private int money = 1000000;
+    private int money = 200000000;
 
+    @Column(name = "USER_APPKEY", nullable = true)
+    private String appkey;
+
+    @Column(name = "USER_APPSEC", nullable = true)
+    private String appsec;
+
+    @Column(name = "USER_APPPER", nullable = true)
+    private String appper;
 }
 
 

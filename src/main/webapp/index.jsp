@@ -64,7 +64,7 @@
             </div>
             <br>
 
-            <p class="card-text">무릎에 매수하고 어깨에 매도하라.</p>
+            <p style="font-size: 30px; opacity: 65%" class="card-text">무릎에 매수하고 어깨에 매도하라.</p>
 
             <script>
                 async function ff(stockName) {
@@ -114,7 +114,7 @@
                 </script>
             </div>
             <br>
-            <p class="card-text">난 이거 1파로 본다.</p>
+            <p style="font-size: 30px; opacity: 65%" class="card-text">난 이거 1파로 본다.</p>
 
 
             <!-- item e -->
@@ -146,7 +146,7 @@
                 </script>
             </div>
             <br>
-            <p class="card-text">10년 투자안할 주식, 10분도 보유말라.</p>
+            <p style="font-size: 30px; opacity: 65%" class="card-text">10년 투자안할 주식, 10분도 보유말라.</p>
 
             <!-- item e -->
         </div>

@@ -4,6 +4,7 @@ import com.example.jsp_stock_backend.domain.User;
 import com.example.jsp_stock_backend.dto.AddStockDto;
 import com.example.jsp_stock_backend.dto.AddUserDto;
 import com.example.jsp_stock_backend.dto.Code;
+import com.example.jsp_stock_backend.dto.UserEdItDto;
 import com.example.jsp_stock_backend.service.UserService;
 import com.example.jsp_stock_backend.serviceMail.MailService;
 import lombok.RequiredArgsConstructor;
@@ -12,8 +13,10 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
 @RestController
@@ -29,6 +32,7 @@ public class MainController {
     public String test() {
         return "test";
     }
+
 
     @GetMapping("/mail/{username}/{email}")
     public String mail(@PathVariable String username, @PathVariable String email, HttpSession session) {
@@ -66,18 +70,18 @@ public class MainController {
     }
 
 
+    @GetMapping("/get-stockcode/{stockname}")
+    @ResponseBody
+    public String getStockcode(@PathVariable String stockname) {
+        log.info("[" + stockname + "] 종목코드 검색 ");
+        return userService.getStockcode(stockname);
+    }
+
+
     // --------------POST METHOD-------------- //
     @PostMapping("") // 유저 회원가입.
     public void addUser(@RequestBody AddUserDto addUserDto) {
         userService.addUser(addUserDto);
-    }
-
-
-    @PostMapping("/stock")
-    public String addStock(@RequestBody AddStockDto addStockDto) {
-        log.info("주식 가격들이 데이터베이스에 저장되었습니다.");
-        userService.stockParse(addStockDto);
-        return "";
     }
 
 
@@ -97,6 +101,19 @@ public class MainController {
     @GetMapping("delete/{id}") // 유저 퇴출.
     public void deleteUser(@PathVariable Long id) {
         userService.deleteUserById(id);
+    }
+
+
+    @PutMapping("/editUserInfo/{id}")
+    public void editUserInfo(@PathVariable Long id, @RequestBody UserEdItDto userEdItDto, HttpSession session) {
+        String name = userService.editUserInfo(id, userEdItDto);
+
+        session.setAttribute("username", userEdItDto.getInfoUserName());
+        session.setAttribute("login_id", userEdItDto.getInfoUserId());
+        session.setAttribute("login_password", userEdItDto.getInfoUserPassword());
+        session.setAttribute("role", userEdItDto.getInfoUserRole());
+
+        log.info(name + "님의 정보가 수정되었습니다.");
     }
 
 

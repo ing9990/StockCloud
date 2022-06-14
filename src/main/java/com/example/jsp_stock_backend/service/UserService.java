@@ -120,7 +120,6 @@ public class UserService {
     }
 
 
-
     public void sendMail(String username, String email) {
         mailService.sendMail(username, email);
     }
@@ -177,11 +176,17 @@ public class UserService {
         document = Jsoup.connect(url).get();
 
         Elements el = document.body().getElementsByClass("js-inner-all-results-quotes-wrapper newResultsContainer quatesTable");
-        Element el2 = el.get(0);
 
-        Elements result = el2.getElementsByClass("second");
-        System.out.println(result.get(0).text());
+        try {
+            Element el2 = el.get(0);
+            Elements result = el2.getElementsByClass("second");
+            System.out.println(result.get(0).text());
 
-        return result.get(0).text();
+            return result.get(0).text();
+        } catch (Exception e) {
+            System.out.println(stockname + "은 없는 종목입니다.");
+            return "NOCATCH";
+        }
+
     }
 }

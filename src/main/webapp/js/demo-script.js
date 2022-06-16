@@ -2,14 +2,6 @@ let token = 0
 let is_checked = false
 const path = "http://192.168.252.181:8090/"
 
-
-function demoEvent() {
-    fetch(path + "api/v1")
-        .then((res) => {
-            console.log(res)
-        })
-}
-
 function sendmail() {
     const username = document.getElementById("username").value
     const email = document.getElementById("email").value
@@ -17,16 +9,13 @@ function sendmail() {
     alert("이메일이 전송되었습니다.")
 
     let tmpPath = path + "api/v1/mail/" + username + "/" + email
-    console.log(tmpPath)
 
     fetch(tmpPath)
         .then((res) => res.json())
         .then((data) => {
             token = data
-            console.log("data: " + data)
         })
 
-    console.log(username + "님의 토큰은 " + token + "입니다.")
 }
 
 
@@ -38,8 +27,6 @@ function editUserInfo(e) {
     let infoUserName = document.getElementById("iusername").value
     let infoUserEmail = document.getElementById("iemail").value
 
-    console.log("id: " + infoUserId.toString())
-    console.log("pw: " + infoUserPassword.toString())
 
     let data = {
         "infoUserId": infoUserId,
@@ -60,7 +47,7 @@ function editUserInfo(e) {
         },
         body: JSON.stringify(data),
     })
-        .then((res) => console.log(res))
+        .then((res) => console.log(""))
 
     alert("변경이 완료되었습니다.")
 
@@ -80,7 +67,6 @@ function checkingToken() {
 }
 
 function clickSubmit() {
-    console.log(is_checked)
 
     if (is_checked) {
         document.getElementById("join-form").submit()

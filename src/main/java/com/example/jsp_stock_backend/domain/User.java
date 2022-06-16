@@ -59,6 +59,7 @@ public class User {
 
     @Column(name = "USER_APPPER", nullable = true)
     private String appper;
+
 }
 
 

@@ -1,6 +1,6 @@
 let token = 0
 let is_checked = false
-const path = "http://192.168.252.181:8090/"
+const path = "http://192.168.252.181:7777/"
 
 function sendmail() {
     const username = document.getElementById("username").value

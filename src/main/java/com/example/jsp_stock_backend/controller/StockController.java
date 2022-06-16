@@ -8,8 +8,6 @@ package com.example.jsp_stock_backend.controller;
 import com.example.jsp_stock_backend.dto.BuyStockVO;
 import com.example.jsp_stock_backend.dto.SellStockVO;
 import com.example.jsp_stock_backend.dto.StockListVO;
-import com.example.jsp_stock_backend.repository.TradeRepository;
-import com.example.jsp_stock_backend.repository.UserRepository;
 import com.example.jsp_stock_backend.serviceStock.StockService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -46,9 +44,7 @@ public class StockController {
 
     @PostMapping("/stock/buy")
     public void buy_stock(@RequestBody BuyStockVO buyStockvo) {
-
         log.info(buyStockvo.getUser_id() + "번 유저가 " + buyStockvo.getStock_name() + " " + buyStockvo.getCount() + "주를 매수하셨습니다.");
-
         stockService.buyStock(buyStockvo);
     }
 
@@ -76,4 +72,5 @@ public class StockController {
         log.info(id + "번 유저가 개인 키를 조회합니다.");
         return stockService.getAppPer(id);
     }
+
 }

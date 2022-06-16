@@ -18,11 +18,6 @@
 <hr>
 <div style="height: 100px"></div>
 
-<%--<form action="http://localhost:8090/join-process" method="post">
-    <input type="text" name="id" required placeholder="Id">
-    <input type="password"  name="pw" required placeholder="Password">
-</form>--%>
-
 <div style="display: flex">
 
     <div style="width: 35%; height: 100%;">
@@ -30,7 +25,7 @@
     </div>
     <div style="width: 30%">
 
-        <form action="http://192.168.252.181:8090/join-process" method="post" class="row g-4" id="join-form">
+        <form action="http://192.168.252.181:7777/join-process" method="post" class="row g-4" id="join-form">
             <div class="col-md-12">
                 <label for="validationServer01" class="form-label">ID</label>
                 <input type="text" class="form-control is-valid" name="id" id="validationServer01" value=""

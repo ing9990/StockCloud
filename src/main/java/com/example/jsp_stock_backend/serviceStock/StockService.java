@@ -72,6 +72,7 @@ public class StockService {
     }
 
 
+    @Transactional
     public void sellStock(SellStockVO sellStockvo) {
 
         var user = userRepository.findById(sellStockvo.getUser_id()).orElseThrow(RuntimeException::new);
@@ -93,6 +94,7 @@ public class StockService {
         userRepository.save(user);
     }
 
+    @Transactional
     public List<StockListVO> getList(Long id) {
         List<StockListVO> list = new ArrayList<>();
 

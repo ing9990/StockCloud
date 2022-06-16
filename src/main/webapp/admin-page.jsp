@@ -41,7 +41,7 @@
 
     <script>
 
-        const path = "http://192.168.252.181:8090/"
+        const path = "http://192.168.252.181:7777/"
 
         function upbtnOnclick(e) {
             let id = e.name.charAt(e.name.length - 1)

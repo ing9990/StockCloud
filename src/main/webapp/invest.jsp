@@ -105,12 +105,6 @@
 
     <h5 style="color: white; padding: 4px 4px 4px 32px;"><%=session.getAttribute("username")%> 님의 지갑</h5>
 
-
-    <%--
-            1. http://192.168.252.181:8090/api/v2/stock/`2` -> `n`번 User의 보유 종목을 조회.
-            2. http://192.168.252.181:8090/api/v2/money/`2` -> `n`번 User의 보유 현금을 조회.
-    --%>
-
     <a href="#" id="my-money-a"></a>
     <a href="#" id="my_all_money"></a>
 

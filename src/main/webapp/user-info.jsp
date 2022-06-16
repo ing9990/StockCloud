@@ -48,7 +48,6 @@
 
         <th><input class="n" type="text" value="<%=session.getAttribute("email")%>" id="iemail"></input></th>
 
-
         <th>
             <a href="./main.jsp" style="text-decoration: none">
                 <button onclick="editUserInfo(<%=session.getAttribute("id")%>)" class="btn btn-success">

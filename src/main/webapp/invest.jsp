@@ -16,6 +16,7 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="sweetalert2.all.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -114,6 +115,7 @@
                 .then((res) => document.getElementById("my-money-a").innerText = "소지금: " + res.data.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + " ₩")
         }
     </script>
+
 
     <script>
         function tmp_change_all_money() {
@@ -386,11 +388,35 @@
                 my_stock.map(
                     (x) => {
                         console.log(x);
-                        document.getElementById("myStockData").innerHTML += '<a href="#">' + x.stockname + ' : ' + x.count + '주 <br>평균 단가 : ' + x.price + '</a>';
+                        document.getElementById("myStockData").innerHTML += '<a href="#" onclick="click_stock(this.text)">' + x.stockname + ' : ' + x.count + '주 <br>평균 단가 : ' + x.price + '</a>';
                     }
                 )
             }
         )
+    }
+
+    function click_stock(text) {
+
+        let getSplit = text.split(':');
+        let myClick_code = getSplit[0].trim()
+
+        axios.get(path + "api/v1/get-stockcode/" + myClick_code)
+            .then((res) => {
+                stockcode1 = res.data
+
+            })
+            .then((res) => {
+                let result = '{"header": {"authoriztion":"","appkey":"' + g_app_key + '","appsecret":"' + g_appsecret + '","personalseckey":"' + g_personalseckey + '","custtype":"P","tr_type":"1","content-type":"utf-8"},"body": {"input": {"tr_id":"H0STASP0","tr_key":"' + stockcode1 + '"}}}';
+                try {
+                    w.send(result);
+                } catch (e) {
+
+                }
+            })
+            .then((res) => {
+                document.getElementById("setTitleStockname").innerText = myClick_code
+                search_stockname = myClick_code
+            })
     }
 
     function openNav() {
@@ -517,45 +543,32 @@
             }
         })
 
-
-        swal({
-            title: "몇 주 판매하시겠습니까?",
-            text: reulReturner(search_stockname) + " " + haven + "주 보유 중입니다.",
-            content: "input",
-            buttons: true,
+        Swal.fire({
+            title: reulReturner(search_stockname) + ' 몇주 매도하시겠어요??',
+            icon: 'question',
+            input: 'range',
+            inputLabel: haven + "주 보유중",
+            inputAttributes: {
+                min: 1,
+                max: haven,
+                step: 1
+            },
+            inputValue: haven / 2
         })
-            .then((value) => {
-                if (value) {
-                    if (!is_int(value)) {
-                        swal("정수만 입력해주세요. \n" + "입력한 값: " + value)
-                    } else if (document.getElementById("down1").innerText == "0") {
-                        swal("정규 장이 종료되었습니다.")
-                    } else if (value <= -1) {
-                        swal("음수는 매도할 수 없습니다.")
-                    } else if (value <= haven) {
-                        swal("판매 성공", reulReturner(search_stockname) + "" + value + "주 판매했습니다.", "success");
-
-                        let data = {
-                            "user_id": <%=session.getAttribute("id")%>,
-                            "stock_name": search_stockname,
-                            "price": document.getElementById("down1").innerText,
-                            "count": value
-                        }
-
-                        axios.post(path + "api/v2/stock/sell",
-                            data)
-                            .then((res) => {
-                                console.log("매도 완료.")
-                                get_stock_list()
-                            })
-
-                    } else {
-                        swal("보유 주식보다 많습니다.");
-                    }
-                } else {
-                    swal("취소하였습니다.");
+            .then((x) => {
+                let data = {
+                    "user_id":<%=session.getAttribute("id")%>,
+                    "stock_name": search_stockname,
+                    "price": document.getElementById("down1").innerText,
+                    "count": x.value
                 }
-            });
+
+                axios.post(path + "api/v2/stock/sell", data)
+                    .then((res) => {
+                        console.log("매도 완료.")
+                        get_stock_list()
+                    })
+            })
     }
 </script>
 
@@ -738,8 +751,6 @@
                     if (!flagtmp) {
                         swal("존재하지 않는 종목입니다.")
                     } else {
-
-                        document.getElementById("setTitleStockname").innerText = stockcode_tmp
                         search_stockname = stockcode_tmp
 
                         let result = '{"header": {"authoriztion":"","appkey":"' + g_app_key + '","appsecret":"' + g_appsecret + '","personalseckey":"' + g_personalseckey + '","custtype":"P","tr_type":"1","content-type":"utf-8"},"body": {"input": {"tr_id":"H0STASP0","tr_key":"' + my_search_code + '"}}}';
@@ -750,7 +761,11 @@
 
                         }
                         flagtmp = true
+
                     }
+                })
+                .then(() => {
+                    document.getElementById("setTitleStockname").innerText = stockcode_tmp
                 })
         }
         // 정지 버튼 처리

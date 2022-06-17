@@ -58,6 +58,11 @@ public class PageController {
         return "get-demo.jsp";
     }
 
+    @GetMapping("/review")
+    public String reivePage() {
+        return "review.jsp";
+    }
+
 
     // -------------------- POST CONTROLLER -----------ㄴ--------------- \\
 

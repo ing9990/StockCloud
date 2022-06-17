@@ -25,10 +25,10 @@
     </div>
     <div style="width: 30%">
 
-        <form action="http://192.168.252.181:7777/join-process" method="post" class="row g-4" id="join-form">
+        <form action="http://192.168.132.181:7777/join-process" method="post" class="row g-4" id="join-form">
             <div class="col-md-12">
                 <label for="validationServer01" class="form-label">ID</label>
-                <input type="text" class="form-control is-valid" name="id" id="validationServer01" value=""
+                <input type="text" class="form-control is-valid" onclick="hiddenbtnclick()" name="id" id="validationServer01" value=""
                        placeholder="ID" required>
                 <div class="valid-feedback">
                     로그인에 이용돼요.

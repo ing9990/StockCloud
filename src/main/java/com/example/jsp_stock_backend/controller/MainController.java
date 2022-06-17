@@ -1,10 +1,7 @@
 package com.example.jsp_stock_backend.controller;
 
 import com.example.jsp_stock_backend.domain.User;
-import com.example.jsp_stock_backend.dto.AddStockDto;
-import com.example.jsp_stock_backend.dto.AddUserDto;
-import com.example.jsp_stock_backend.dto.Code;
-import com.example.jsp_stock_backend.dto.UserEdItDto;
+import com.example.jsp_stock_backend.dto.*;
 import com.example.jsp_stock_backend.service.UserService;
 import com.example.jsp_stock_backend.serviceMail.MailService;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +24,7 @@ public class MainController {
 
     // Dependency Injection
     private final UserService userService;
+    private final MailService mailService;
 
     @GetMapping("/test")
     public String test() {
@@ -82,6 +80,12 @@ public class MainController {
     @PostMapping("") // 유저 회원가입.
     public void addUser(@RequestBody AddUserDto addUserDto) {
         userService.addUser(addUserDto);
+    }
+
+    @PostMapping("/mail/user/{user_id}")
+    public void sendMailUser(@PathVariable Long user_id, @RequestBody Chat chat) {
+        mailService.sendMailUser(user_id, chat);
+        log.info(user_id + "번 회원에게 " + "이메일 전송을 완료했습니다.");
     }
 
 

@@ -76,17 +76,17 @@ public class StockService {
     public void sellStock(SellStockVO sellStockvo) {
 
         var user = userRepository.findById(sellStockvo.getUser_id()).orElseThrow(RuntimeException::new);
-
+        int tax = tax(sellStockvo.getUser_id(), sellStockvo.getPrice() * sellStockvo.getCount());
 
         for (Trade trade : tradeRepository.findAll()) {
             if (sellStockvo.getUser_id() == trade.getUser_id() && trade.getStockname().equals(sellStockvo.getStock_name())) {
                 if (sellStockvo.getCount() == trade.getCount()) {
                     // sell all
-                    user.setMoney(user.getMoney() + sellStockvo.getCount() * sellStockvo.getPrice());
+                    user.setMoney((user.getMoney() + sellStockvo.getCount() * sellStockvo.getPrice()) - tax);
                     tradeRepository.delete(trade);
                 } else {
                     // sell some
-                    user.setMoney(user.getMoney() + sellStockvo.getCount() * sellStockvo.getPrice());
+                    user.setMoney((user.getMoney() + sellStockvo.getCount() * sellStockvo.getPrice()) - tax);
                     trade.setCount(trade.getCount() - sellStockvo.getCount());
                 }
             }
@@ -140,4 +140,30 @@ public class StockService {
 
         return cash + stock_money.get();
     }
+
+
+    private int tax(Long user_id, int price) {
+        int result = 0; // 낼 세금.
+
+        var role = userRepository.findById(user_id).get().getRole();
+
+        switch (role) {
+            case BRONZE:
+                result = (price / 100 * 1);
+                break;
+            case SILVER:
+                result = (int) (price / 100 * 0.8);
+                break;
+            case GOLD:
+                result = (int) (price / 100 * 0.6);
+                break;
+            case VIP:
+                result = (int) (price / 100 * 0.2);
+                break;
+            default:
+                break;
+        }
+        return result;
+    }
+
 }

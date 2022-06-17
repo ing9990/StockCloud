@@ -37,7 +37,7 @@
             </li>
 
             <li class="nav-item">
-                <form action="http://192.168.252.181:7777/logout-process" id="form-logout" method="post">
+                <form action="http://192.168.132.181:7777/logout-process" id="form-logout" method="post">
                     <a href="javascript:document.getElementById('form-logout').submit()" class="nav-link">로그 아웃</a>
                 </form>
             </li>

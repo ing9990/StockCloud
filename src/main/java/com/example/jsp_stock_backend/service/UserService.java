@@ -182,6 +182,10 @@ public class UserService {
             Elements result = el2.getElementsByClass("second");
             System.out.println(result.get(0).text());
 
+            for (char c : result.get(0).text().toCharArray())
+                if (!Character.isDigit(c))
+                    return "NOCATCH";
+
             return result.get(0).text();
         } catch (Exception e) {
             System.out.println(stockname + "은 없는 종목입니다.");

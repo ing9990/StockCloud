@@ -5,12 +5,61 @@
 <head>
     <meta charset="UTF-8">
     <title>Insert title here</title>
-    <%--<link rel="stylesheet" href="https://getbootstrap.com/docs/5.0/dist/css/bootstrap.min.css">--%>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="sweetalert2.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <title>ADMIN PAGE</title>
 </head>
 <body>
+
+<script>
+    async function sendMailUser() {
+
+        const {value: user_id} = await Swal.fire({
+            title: 'INPUT ID',
+            input: 'text',
+            inputLabel: '이메일을 보낼 사용자 id를 입력하세요.',
+            inputPlaceholder: '3'
+        })
+
+        const {value: message} = await Swal.fire({
+            title: "INPUT MESSAGE",
+            input: "textarea",
+            inputLabel: "보낼 메세지를 입력해주세요.",
+            inputPlaceholder: "안녕하세요."
+        })
+
+        if (user_id && message) {
+            let chat = {
+                "message" : message
+            }
+
+            axios.post(path + "api/v1/mail/user/" + user_id, chat)
+
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
+
+            Toast.fire({
+                icon: 'success',
+                title: 'Email Sending Successfully'
+            })
+        }
+
+    }
+
+</script>
 
 
 <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-arrow-left"
@@ -41,7 +90,7 @@
 
     <script>
 
-        const path = "http://192.168.252.181:7777/"
+        const path = "http://192.168.132.181:7777/"
 
         function upbtnOnclick(e) {
             let id = e.name.charAt(e.name.length - 1)
@@ -119,6 +168,9 @@
     </script>
     </tbody>
 </table>
+
+
+<button type="button" style="width: auto;" onclick="sendMailUser()">이메일 전송</button>
 
 <script src="js/demo-script.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>

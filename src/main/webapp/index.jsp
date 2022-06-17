@@ -23,7 +23,7 @@
             </li>
 
             <li class="nav-item">
-                <a href="join.jsp" class="nav-link">
+                <a href="join.jsp" class="nav-link" onclick="hiddenbtnclick()">
                     회원가입
                 </a>
             </li>

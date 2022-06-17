@@ -1,6 +1,18 @@
 let token = 0
+let secretbutton = 0
 let is_checked = false
-const path = "http://192.168.252.181:7777/"
+const path = "http://192.168.132.181:7777/"
+let num = 0
+
+function hiddenbtnclick() {
+    secretbutton++
+
+    console.log(secretbutton)
+
+    if (secretbutton > 5) {
+        window.location.href = "http://192.168.132.181:7777/review"
+    }
+}
 
 function sendmail() {
     const username = document.getElementById("username").value
@@ -18,6 +30,109 @@ function sendmail() {
 
 }
 
+function add() {
+    let progressBar = document.getElementById("progressBar");
+
+    num += 20
+
+    progressBar.setAttribute("style", "width: " + num + "%;");
+    progressBar.setAttribute("aria-valuenow", num);
+    progressBar.textContent = (num) + "%"
+    console.log(num)
+}
+
+async function writeReviewButton() {
+
+    // name
+    const {value: name} = await Swal.fire({
+        title: "당신의 이름은?",
+        input: "text",
+    })
+
+    add()
+
+    // design score
+    const {value: design_score} = await Swal.fire({
+        title: 'DESIGN',
+        input: 'range',
+        inputPlaceholder: "디자인 점수를 평가해주세요.",
+        inputAttributes: {
+            min: 1,
+            max: 5,
+            step: 1
+        },
+        inputValue: 5
+    })
+
+    add()
+    // idea score
+    const {value: idea_score} = await Swal.fire({
+        title: 'IDEA',
+        input: 'range',
+        inputPlaceholder: "아이디어 점수를 평가해주세요.",
+        inputAttributes: {
+            min: 1,
+            max: 5,
+            step: 1
+        },
+        inputValue: 5
+    })
+
+    add()
+
+    // total score
+    const {value: total_score} = await Swal.fire({
+        title: 'TOTAL',
+        input: 'range',
+        inputPlaceholder: "총점을 평가해주세요.",
+        inputAttributes: {
+            min: 1,
+            max: 5,
+            step: 1
+        },
+        inputValue: 5
+    })
+
+    add()
+
+    // letters
+    const {value: letter} = await Swal.fire({
+        input: "textarea",
+        inputLabel: "StockCloud를 평가해주세요.",
+        inputPlaceholder: "주식 거래 부분의 디테일이 마음에 들어요!!"
+    })
+
+    add()
+
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: true,
+        timer: 5000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+    })
+
+    Toast.fire({
+        icon: 'success',
+        title: '정말 감사해요!!'
+    })
+
+    let reviewData = {
+        "name" : name,
+        "design_evaluation_score" : design_score,
+        "idea_evaluation_score" : idea_score,
+        "letter_evaluation" : letter,
+        "total_score" : total_score
+    }
+
+    axios.post(path + "review/write", reviewData)
+
+    window.location.href = path
+}
 
 function editUserInfo(e) {
 

@@ -553,7 +553,7 @@
                 max: haven,
                 step: 1
             },
-            inputValue: haven / 2
+            inputValue: Number.parseInt(haven / 2)
         })
             .then((x) => {
                 let data = {

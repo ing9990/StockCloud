@@ -41,13 +41,39 @@ function add() {
     console.log(num)
 }
 
+
 async function writeReviewButton() {
 
-    // name
+    // Timer
+    let timerInterval
+    await Swal.fire({
+        title: '리뷰를 남길 준비가 되셨나요???',
+        html: '<b></b>',
+        timer: 2000,
+        timerProgressBar: true,
+        didOpen: () => {
+            Swal.showLoading()
+            const b = Swal.getHtmlContainer().querySelector('b')
+            timerInterval = setInterval(() => {
+                b.textContent = Swal.getTimerLeft()
+            }, 100)
+        },
+        willClose: () => {
+            clearInterval(timerInterval)
+        }
+    }).then((result) => {
+        if (result.dismiss === Swal.DismissReason.timer) {
+
+        }
+    })
+
+    //name
     const {value: name} = await Swal.fire({
         title: "당신의 이름은?",
         input: "text",
+        inputPlaceholder: "홍길동",
     })
+
 
     add()
 
@@ -55,7 +81,7 @@ async function writeReviewButton() {
     const {value: design_score} = await Swal.fire({
         title: 'DESIGN',
         input: 'range',
-        inputPlaceholder: "디자인 점수를 평가해주세요.",
+        inputLabel: name + "님이 생각하는 StockCloud의 디자인 점수는?",
         inputAttributes: {
             min: 1,
             max: 5,
@@ -69,7 +95,7 @@ async function writeReviewButton() {
     const {value: idea_score} = await Swal.fire({
         title: 'IDEA',
         input: 'range',
-        inputPlaceholder: "아이디어 점수를 평가해주세요.",
+        inputLabel: name + "님이 생각하시는 StockCloud의 아이디어 점수는?",
         inputAttributes: {
             min: 1,
             max: 5,
@@ -84,7 +110,7 @@ async function writeReviewButton() {
     const {value: total_score} = await Swal.fire({
         title: 'TOTAL',
         input: 'range',
-        inputPlaceholder: "총점을 평가해주세요.",
+        inputPlaceholder: name + "님이 생각하시는 StockCloud의 총 점수는?",
         inputAttributes: {
             min: 1,
             max: 5,
@@ -108,7 +134,7 @@ async function writeReviewButton() {
         toast: true,
         position: 'top-end',
         showConfirmButton: true,
-        timer: 5000,
+        timer: 3000,
         timerProgressBar: true,
         didOpen: (toast) => {
             toast.addEventListener('mouseenter', Swal.stopTimer)
@@ -120,18 +146,20 @@ async function writeReviewButton() {
         icon: 'success',
         title: '정말 감사해요!!'
     })
+        .then(() => {
+            let reviewData = {
+                "name": name,
+                "design_evaluation_score": design_score,
+                "idea_evaluation_score": idea_score,
+                "letter_evaluation": letter,
+                "total_score": total_score
+            }
 
-    let reviewData = {
-        "name" : name,
-        "design_evaluation_score" : design_score,
-        "idea_evaluation_score" : idea_score,
-        "letter_evaluation" : letter,
-        "total_score" : total_score
-    }
+            axios.post(path + "review/write", reviewData)
 
-    axios.post(path + "review/write", reviewData)
+            window.location.href = path
+        })
 
-    window.location.href = path
 }
 
 function editUserInfo(e) {

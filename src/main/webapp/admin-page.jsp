@@ -34,7 +34,7 @@
 
         if (user_id && message) {
             let chat = {
-                "message" : message
+                "message": message
             }
 
             axios.post(path + "api/v1/mail/user/" + user_id, chat)
@@ -68,7 +68,8 @@
           d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
 </svg>
 
-<button onclick="demoEvent()" class="btn btn-primary">워드 클라우드 새로고침</button>
+<button onclick="demoEvent()" class="btn btn-primary" style="margin-left:30px;">워드 클라우드 새로고침</button>
+<button type="button" style="width: auto; margin-left: 30px;" class="btn btn-primary" onclick="sendMailUser()">이메일 전송</button>
 
 <table id="user_table" class="table table-bordered"
        style="width: 80%; table: white; margin: 0 auto;">
@@ -169,8 +170,6 @@
     </tbody>
 </table>
 
-
-<button type="button" style="width: auto;" onclick="sendMailUser()">이메일 전송</button>
 
 <script src="js/demo-script.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>

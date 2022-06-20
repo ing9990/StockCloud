@@ -25,5 +25,4 @@ public class ReviewVO {
     private String letter_evaluation;
     // 총점
     private int total_score;
-
 }

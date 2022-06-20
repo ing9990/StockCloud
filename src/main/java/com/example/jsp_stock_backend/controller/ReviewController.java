@@ -29,6 +29,4 @@ public class ReviewController {
         log.info(reviewVO.getName() + "님이 리뷰를 남겼습니다.");
         reviewService.writeReview(reviewVO);
     }
-
-
 }

@@ -69,7 +69,8 @@
 </svg>
 
 <button onclick="demoEvent()" class="btn btn-primary" style="margin-left:30px;">워드 클라우드 새로고침</button>
-<button type="button" style="width: auto; margin-left: 30px;" class="btn btn-primary" onclick="sendMailUser()">이메일 전송</button>
+<button type="button" style="width: auto; margin-left: 30px;" class="btn btn-primary" onclick="sendMailUser()">이메일 전송
+</button>
 
 <table id="user_table" class="table table-bordered"
        style="width: 80%; table: white; margin: 0 auto;">
@@ -96,7 +97,8 @@
         function upbtnOnclick(e) {
             let id = e.name.charAt(e.name.length - 1)
             fetch(path + "api/v1/put/" + id)
-                .then((res) => console.log(res))
+                .then((res) => {
+                })
 
             location.reload()
         }
@@ -104,7 +106,8 @@
         function dnbtnOnclick(e) {
             let id = e.name.charAt(e.name.length - 1)
             fetch(path + "api/v1/uput/" + id)
-                .then((res) => console.log(res))
+                .then((res) => {
+                })
 
             location.reload()
         }
@@ -113,7 +116,8 @@
             let id = e.name.charAt(e.name.length - 1)
 
             fetch(path + "api/v1/delete/" + id)
-                .then((res) => console.log(res))
+                .then((res) => {
+                })
 
             location.reload()
         }
@@ -121,7 +125,7 @@
         function demoEvent() {
             fetch(path + "api/v1")
                 .then((res) => {
-                    console.log(res)
+
                 })
         }
 
@@ -170,8 +174,8 @@
     </tbody>
 </table>
 
-
 <script src="js/demo-script.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>

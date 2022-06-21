@@ -26,6 +26,7 @@ public class MainController {
     private final UserService userService;
     private final MailService mailService;
 
+
     @GetMapping("/test")
     public String test() {
         return "test";

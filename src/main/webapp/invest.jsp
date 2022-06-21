@@ -387,7 +387,6 @@
 
                 my_stock.map(
                     (x) => {
-                        console.log(x);
                         document.getElementById("myStockData").innerHTML += '<a href="#" onclick="click_stock(this.text)">' + x.stockname + ' : ' + x.count + '주 <br>평균 단가 : ' + x.price + '</a>';
                     }
                 )
@@ -490,9 +489,8 @@
                         swal("정규 장이 마감되었습니다.")
                     } else {
 
-
                         money -= document.getElementById("up1").innerText * value
-                        swal("구매 성공", reulReturner(search_stockname) + " " + value + "주 매수했습니다.\n\n매수 가격: " + getDotPrice(document.getElementById("up1").innerText) + "원\n\n매수 총액: " + getDotPrice(document.getElementById("up1").innerText * value) + "원" + "\n\n보유 현금: " + money.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + "원", "success");
+                        swal("매수 주문이 체결되었습니다.", reulReturner(search_stockname) + " " + value + "주 매수했습니다.\n\n매수 가격: " + getDotPrice(document.getElementById("up1").innerText) + "원\n\n매수 총액: " + getDotPrice(document.getElementById("up1").innerText * value) + "원" + "\n\n보유 현금: " + money.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + "원", "success");
 
                         let data = {
                             "user_id": <%=session.getAttribute("id")%>,
@@ -518,7 +516,6 @@
         axios.get(path + "api/v2/stock/" + <%=session.getAttribute("id")%>)
             .then((res) => {
                 my_stock = res.data
-                console.log(my_stock)
             })
     }
 
@@ -556,6 +553,10 @@
             inputValue: Number.parseInt(haven / 2)
         })
             .then((x) => {
+                money += document.getElementById("down1").innerText * x.value
+                Number.parseInt(money)
+                swal("매도 주문이 체결되었습니다.", reulReturner(search_stockname) + " " + x.value + "주 매도했습니다.\n\n매도가: " + getDotPrice(document.getElementById("down1").innerText) + "원\n\n매도 총액: " + getDotPrice(document.getElementById("down1").innerText * x.value) + "원" + "\n\n보유 현금: " + money.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + "원", "success");
+
                 let data = {
                     "user_id":<%=session.getAttribute("id")%>,
                     "stock_name": search_stockname,
@@ -565,7 +566,6 @@
 
                 axios.post(path + "api/v2/stock/sell", data)
                     .then((res) => {
-                        console.log("매도 완료.")
                         get_stock_list()
                     })
             })
@@ -595,10 +595,6 @@
         .then((res) => {
             g_personalseckey = res.data
         })
-
-    console.log(g_app_key)
-    console.log(g_appsecret)
-    console.log(g_personalseckey)
 
 
     /* button action 시 stockcode 저장 전역변수 */
@@ -639,7 +635,6 @@
 
     // 출력처리, 실시간 로그 확인용이라 지워도 상관 없음
     var log = function (s, f) {
-        //console.log(s);
         if (document.readyState !== "complete") {
             log.buffer.push(s);
         } else {
@@ -667,7 +662,6 @@
             var trid = strArray[1];		// Tr ID
             var bodydata = (strArray[3]);	// 수신받은 데이터 중 실시간데이터 부분
             if (trid == "H0STCNT0" || trid == "K0STCNT0") {
-                console.log(bodydata);
             }
 
             if (trid == "H0STASP0" && strArray[0] == 0) {	// 주식호가

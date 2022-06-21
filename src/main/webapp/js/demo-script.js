@@ -190,7 +190,9 @@ function editUserInfo(e) {
         },
         body: JSON.stringify(data),
     })
-        .then((res) => console.log(""))
+        .then((res) => {
+
+        })
 
     alert("변경이 완료되었습니다.")
 

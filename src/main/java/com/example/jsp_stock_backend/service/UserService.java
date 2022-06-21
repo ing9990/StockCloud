@@ -2,10 +2,10 @@ package com.example.jsp_stock_backend.service;
 
 import com.example.jsp_stock_backend.domain.Role;
 import com.example.jsp_stock_backend.domain.User;
-import com.example.jsp_stock_backend.dto.AddStockDto;
 import com.example.jsp_stock_backend.dto.AddUserDto;
 import com.example.jsp_stock_backend.dto.UserEdItDto;
 import com.example.jsp_stock_backend.mod.pythonTest.Main;
+import com.example.jsp_stock_backend.repository.TradeRepository;
 import com.example.jsp_stock_backend.repository.UserRepository;
 import com.example.jsp_stock_backend.serviceMail.MailService;
 import com.example.jsp_stock_backend.utils.GivenUsername;
@@ -34,6 +34,7 @@ import java.util.Map;
 @Slf4j
 public class UserService {
 
+    public final TradeRepository tradeRepository;
     public final UserRepository userRepository;
     public final GivenUsername givenUsername;
     private final MailService mailService;
@@ -191,6 +192,6 @@ public class UserService {
             System.out.println(stockname + "은 없는 종목입니다.");
             return "NOCATCH";
         }
-
     }
+
 }

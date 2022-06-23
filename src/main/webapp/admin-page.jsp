@@ -11,7 +11,7 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="sweetalert2.all.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <title>ADMIN PAGE</title>
+    <title>관리자 페이지</title>
 </head>
 <body>
 

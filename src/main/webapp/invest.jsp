@@ -1,8 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <!DOCTYPE html>
-<html>
+<html onkeydown="on_key_down()">
 <head>
+    <script>
+        let plplplp = 0
+    </script>
     <title>모의 투자</title>
     <meta charset="UTF-8">
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -20,6 +23,38 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script>
+        function on_key_down() {
+            let keycode = event.keyCode
+
+            if (keycode == 27) {     // 27 == 'ESC', 219 == '['  \\
+                axios.get(path + "api/v2/money/<%=session.getAttribute("id")%>")
+                    .then((res) => money = res.data)
+
+                swal("ESC가 감지되었습니다.")
+            } else if (keycode == 219) {
+                plplplp++
+                let sec = plplplp / 10
+
+                if (sec >= 3) {
+                    swal(Number.parseInt(7 - sec) + "초 후 리뷰페이지로 이동됩니다.")
+                }
+
+                if (plplplp > 60)
+                    window.location.href = "http://192.168.132.181:7777/review"
+
+            } else {
+                plplplp = 0
+            }
+
+
+        }
+
+
+
+    </script>
+
 
     <style>
         body {
@@ -490,7 +525,7 @@
                     } else {
 
                         money -= document.getElementById("up1").innerText * value
-                        swal("매수 주문이 체결되었습니다.", reulReturner(search_stockname) + " " + value + "주 매수했습니다.\n\n매수 가격: " + getDotPrice(document.getElementById("up1").innerText) + "원\n\n매수 총액: " + getDotPrice(document.getElementById("up1").innerText * value) + "원" + "\n\n보유 현금: " + money.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + "원", "success");
+                        swal("매수 주문이 체결되었습니다.", reulReturner(search_stockname) + " " + value + "주 매수했습니다.\n\n매수 가격: " + getDotPrice(document.getElementById("up1").innerText) + "원\n\n매수 총액: " + getDotPrice(document.getElementById("up1").innerText * value).toString() + "원" + "\n\n보유 현금: " + money.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + "원", "success");
 
                         let data = {
                             "user_id": <%=session.getAttribute("id")%>,
@@ -531,6 +566,11 @@
 
     function sell_stock() {
 
+        if (document.getElementById("down1").innerText == 0) {
+            swal("주식 종목을 불러올 수 없습니다.\n\n종목 검색 후 다시 이용해주세요.")
+            return
+        }
+
         get_stock_list();
 
         my_stock.forEach((x) => {
@@ -540,11 +580,23 @@
             }
         })
 
+        let tax = 0
+
+        if ("<%=session.getAttribute("role")%>" === "BRONZE") {
+            tax = 1
+        } else if ("<%=session.getAttribute("role")%>" === "SILVER") {
+            tax = 0.8
+        } else if ("<%=session.getAttribute("role")%>" === "GOLD") {
+            tax = 0.6
+        } else if ("<%=session.getAttribute("role")%>" === "VIP") {
+            tax = 0.2
+        }
+
         Swal.fire({
             title: reulReturner(search_stockname) + ' 몇주 매도하시겠어요??',
             icon: 'question',
             input: 'range',
-            inputLabel: haven + "주 보유중",
+            inputLabel: haven + "주 보유 중\n\n<%=session.getAttribute("role")%> 등급의 수수료는 " + tax + "%입니다.",
             inputAttributes: {
                 min: 1,
                 max: haven,
@@ -553,9 +605,15 @@
             inputValue: Number.parseInt(haven / 2)
         })
             .then((x) => {
+
+                if (x.value === undefined) {
+                    swal("ESC가 감지되었습니다.")
+                    return
+                }
+
                 money += document.getElementById("down1").innerText * x.value
                 Number.parseInt(money)
-                swal("매도 주문이 체결되었습니다.", reulReturner(search_stockname) + " " + x.value + "주 매도했습니다.\n\n매도가: " + getDotPrice(document.getElementById("down1").innerText) + "원\n\n매도 총액: " + getDotPrice(document.getElementById("down1").innerText * x.value) + "원" + "\n\n보유 현금: " + money.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + "원", "success");
+                swal("매도 주문이 체결되었습니다.", reulReturner(search_stockname) + " " + x.value + "주 매도했습니다.\n\n매도가: " + getDotPrice(document.getElementById("down1").innerText) + "원\n\n매도 총액: " + getDotPrice(document.getElementById("down1").innerText * x.value) + "원" + "\n\n보유 현금: " + money.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",").toString() + "원", "success");
 
                 let data = {
                     "user_id":<%=session.getAttribute("id")%>,
@@ -570,6 +628,7 @@
                     })
             })
     }
+
 </script>
 
 

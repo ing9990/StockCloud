@@ -46,23 +46,6 @@
 
             <p class="card-text">무릎에 매수하고 어깨에 매도하라.</p>
 
-            <script>
-                async function ff(stockName) {
-                    const {value: numberOfStock} = await Swal.fire({
-                        title: stockName,
-                        input: 'text',
-                        inputLabel: '몇주 주문하시겠습니까?',
-                        inputPlaceholder: '1'
-                    })
-
-                    if (numberOfStock * stockPrice > <%=session.getAttribute("money")%>) {
-                        Swal.fire("금액이 부족합니다.")
-                    } else {
-                        Swal.fire(stockName + "을 " + numberOfStock + "주 주문하셨습니다.")
-                    }
-                }
-            </script>
-
             <!-- item e -->
         </div>
         <div class="carousel-item">

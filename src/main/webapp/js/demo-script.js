@@ -7,7 +7,6 @@ let num = 0
 function hiddenbtnclick() {
     secretbutton++
 
-    console.log(secretbutton)
 
     if (secretbutton > 5) {
         window.location.href = "http://192.168.132.181:7777/review"
@@ -38,7 +37,6 @@ function add() {
     progressBar.setAttribute("style", "width: " + num + "%;");
     progressBar.setAttribute("aria-valuenow", num);
     progressBar.textContent = (num) + "%"
-    console.log(num)
 }
 
 
@@ -68,14 +66,18 @@ async function writeReviewButton() {
     })
 
     //name
-    const {value: name} = await Swal.fire({
+    let {value: name} = await Swal.fire({
         title: "당신의 이름은?",
         input: "text",
         inputPlaceholder: "홍길동",
     })
 
+    if (name === "" | name == "" | name == null){
+        name = "GUEST"
+    }
 
-    add()
+
+        add()
 
     // design score
     const {value: design_score} = await Swal.fire({

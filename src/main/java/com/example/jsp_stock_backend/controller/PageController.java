@@ -130,6 +130,6 @@ public class PageController {
         session.removeAttribute("login_password");
         session.removeAttribute("role");
 
-        return "login.jsp";
+        return "index.jsp";
     }
 }

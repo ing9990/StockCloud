@@ -8,9 +8,10 @@
 * `github.com/NYH0227`
 
 ## 아키텍쳐
-![](./erd.png)
+![](./src/main/resources/erd.png)
 
 ## 다이어그램
+![](./src/main/resources/아키텍쳐.png)
 
 
 ## 사용 기술

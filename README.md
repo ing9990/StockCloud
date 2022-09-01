@@ -7,6 +7,12 @@
 * `github.com/ing9990`
 * `github.com/NYH0227`
 
+## 아키텍쳐
+![](./erd.png)
+
+## 다이어그램
+
+
 ## 사용 기술
 
 ### **FRONT END**

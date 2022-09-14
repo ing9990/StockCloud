@@ -33,4 +33,6 @@ public class Trade {
     private int count;
     // 구매한 시간
     private LocalDateTime time_of_purchase = LocalDateTime.now();
+
+
 }

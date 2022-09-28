@@ -92,7 +92,7 @@
 
     <script>
 
-        const path = "http://192.168.132.181:7777/"
+        const path = "http://192.168.241.181:7777/"
 
         function upbtnOnclick(e) {
             let id = e.name.charAt(e.name.length - 1)

@@ -20,18 +20,19 @@ repositories {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation "org.springframework.boot:spring-boot-starter-data-jpa"
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
 
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa"
     implementation 'mysql:mysql-connector-java'
 
     implementation 'javax.servlet:jstl'
-
     implementation "org.apache.tomcat.embed:tomcat-embed-jasper"
     implementation 'org.springframework.boot:spring-boot-starter-mail'
     implementation 'org.jsoup:jsoup:1.15.1'
+    implementation 'org.apache.commons:commons-lang3:3.0'
 
     compileOnly 'org.projectlombok:lombok'
+
 
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
@@ -39,4 +40,5 @@ dependencies {
 
 tasks.named('test') {
     useJUnitPlatform()
+
 }

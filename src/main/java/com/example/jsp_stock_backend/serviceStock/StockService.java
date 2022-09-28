@@ -143,7 +143,7 @@ public class StockService {
 
 
     private int tax(Long user_id, int price) {
-        int result = 0; // 낼 세금.
+        int result = 0;
 
         var role = userRepository.findById(user_id).get().getRole();
 

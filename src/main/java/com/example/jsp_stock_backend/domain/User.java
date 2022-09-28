@@ -1,5 +1,6 @@
 package com.example.jsp_stock_backend.domain;
 
+import com.example.jsp_stock_backend.dto.UserDto;
 import lombok.*;
 import org.apache.tomcat.jni.Local;
 
@@ -59,6 +60,7 @@ public class User {
 
     @Column(name = "USER_APPPER", nullable = true)
     private String appper;
+
 
 }
 

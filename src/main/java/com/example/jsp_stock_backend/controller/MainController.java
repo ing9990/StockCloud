@@ -73,6 +73,7 @@ public class MainController {
     @ResponseBody
     public String getStockcode(@PathVariable String stockname) {
         log.info("[" + stockname + "] 종목코드 검색 ");
+
         return userService.getStockcode(stockname);
     }
 

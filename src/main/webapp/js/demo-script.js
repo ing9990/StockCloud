@@ -1,7 +1,7 @@
 let token = 0
 let secretbutton = 0
 let is_checked = false
-const path = "http://192.168.132.181:7777/"
+const path = "http://192.168.241.181:7777/"
 let num = 0
 
 function hiddenbtnclick() {
@@ -9,7 +9,7 @@ function hiddenbtnclick() {
 
 
     if (secretbutton > 5) {
-        window.location.href = "http://192.168.132.181:7777/review"
+        window.location.href = "http://192.168.241.181:7777/review"
     }
 }
 

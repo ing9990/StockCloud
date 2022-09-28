@@ -42,16 +42,12 @@
                 }
 
                 if (plplplp > 60)
-                    window.location.href = "http://192.168.132.181:7777/review"
+                    window.location.href = "http://192.168.241.181:7777/review"
 
             } else {
                 plplplp = 0
             }
-
-
         }
-
-
 
     </script>
 

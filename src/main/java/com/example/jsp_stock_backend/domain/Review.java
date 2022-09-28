@@ -6,13 +6,13 @@ package com.example.jsp_stock_backend.domain;
 
 
 import lombok.*;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.time.LocalDateTime;
-import java.util.*;
 
 @Getter
 @Setter
@@ -20,6 +20,7 @@ import java.util.*;
 @AllArgsConstructor
 @Entity
 @ToString
+@Builder
 public class Review {
 
     @Id
@@ -28,13 +29,27 @@ public class Review {
 
     private String name;
 
-    private int design_evaluation_score;
+    private int designEvaluationScore;
 
-    private int idea_evaluation_score;
+    private int ideaEvaluationScore;
 
-    private String letter_evaluation;
+    private String letterEvaluation;
 
-    private int total_score;
+    private int totalScore;
 
-    private LocalDateTime rate_at = LocalDateTime.now();
+    private LocalDateTime rated = LocalDateTime.now();
+
+    public static Review updateReview(String name, int totalScore, int designEvaluationScore, int ideaEvaluationScore, String letterEvaluation) {
+        if (StringUtils.isBlank(name))
+            throw new IllegalArgumentException("name 은 빈값이 될 수 없습니다: " + name);
+
+        return Review.builder()
+                .name(name)
+                .designEvaluationScore(designEvaluationScore)
+                .ideaEvaluationScore(ideaEvaluationScore)
+                .letterEvaluation(letterEvaluation)
+                .rated(LocalDateTime.now())
+                .totalScore(totalScore)
+                .build();
+    }
 }

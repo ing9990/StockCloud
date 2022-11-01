@@ -6,14 +6,16 @@
 
 * `github.com/ing9990`
 * `github.com/NYH0227`
+* 
 
-## 아키텍쳐
-![](./src/main/resources/erd.png)
+![](./src/main/resources/logo.jpg)
 
 ## 다이어그램
+
 ![](./src/main/resources/아키텍쳐.png)
 
 ## 구현과정
+
 [TISTORY 바로가기](https://tae-wk.tistory.com/category/%EC%A3%BC%EC%8B%9D%20%EB%AA%A8%EC%9D%98%ED%88%AC%EC%9E%90%20%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8)
 
 ## 사용 기술
